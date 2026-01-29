@@ -1,6 +1,8 @@
+import { atualizarInterfaceUsuario } from "./main";
 import { UsuarioVoluntario } from "./models/usuarioVoluntarioModel";
 import { buildApiUrl } from "./utils/api";
 
+atualizarInterfaceUsuario();
 // Função para inicializar a página de cadastro de voluntário
 export function initializeCadastroVoluntarioPage(): void {
     const form = document.getElementById('userForm') as HTMLFormElement;

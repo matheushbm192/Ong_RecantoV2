@@ -1,7 +1,9 @@
 import {SolicitacaoAdocao} from "./models/solicitacaoAdocaoModel";
 import { PedidoAdocaoRota } from "./utils/rotaPedidoAdocao";
 import { buildApiUrl } from "./utils/api";
+import { atualizarInterfaceUsuario } from "./main";
 
+atualizarInterfaceUsuario();
 interface PedidoAdocaoCompleto {
     idPedido: string;
     dataSolicitacao: string; // Formato ISO 8601 recomendado (ex: "YYYY-MM-DDTHH:mm:ssZ")

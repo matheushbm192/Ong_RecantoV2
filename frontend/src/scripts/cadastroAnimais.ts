@@ -1,4 +1,7 @@
 import { PetRota } from "./utils/rotaAnimais";
+import { atualizarInterfaceUsuario } from "./main";
+
+atualizarInterfaceUsuario();
 setTimeout(() => {
     const botao = document.getElementById('btn-cadastrar');
 

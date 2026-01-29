@@ -1,6 +1,8 @@
+import { atualizarInterfaceUsuario } from "./main";
 import { UsuarioAdministrador } from "./models/usuarioAdministradorModel";
 import { buildApiUrl } from "./utils/api";
 
+atualizarInterfaceUsuario();
 // Função para aplicar máscara de CEP (00000-000)
 function formatarCEP(event: Event): void {
     const input = event.target as HTMLInputElement;

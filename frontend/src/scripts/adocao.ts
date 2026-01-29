@@ -1,7 +1,7 @@
 import { Pet } from "./models/petModel"
 import { PetRota } from "./utils/rotaAnimais";
 import { buildApiUrl } from "./utils/api";
-
+import { atualizarInterfaceUsuario } from "./main";
 let petList: HTMLUListElement;
 let prevBtn: HTMLButtonElement;
 let nextBtn: HTMLButtonElement;
@@ -25,7 +25,7 @@ function getFilteredPets(): Pet[] {
     (idade === "" || String(pet.idade) === idade)
   );
 }
-
+atualizarInterfaceUsuario();
 function popularFiltros(pets: Pet[]): void {
   // Limpa opções antigas
   filtroRaca.innerHTML = "<option value=''>Todas</option>";

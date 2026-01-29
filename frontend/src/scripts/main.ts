@@ -1,41 +1,58 @@
+import authService from "./services/authService";
 
-// function atualizarInterfaceUsuario() {
-//     //const user = getUserFromToken();
+export function atualizarInterfaceUsuario() {
 
-//     const loginMenu = document.getElementById("menu-login");
-//     const logoutMenu = document.getElementById("menu-logout");
-//     const cadastroAnimal = document.getElementById("menu-cadastro-animal");
-//     const cadastroAdmnistrador = document.getElementById("menu-cadastro-administrador");
-//     const cadastrarUsuarioComum = document.getElementById("menu-cadastro-usuario")
-//     const cadastrarUsuarioVoluntario = document.getElementById("menu-cadastro-voluntario")
-//     const animaisAdotados = document.getElementById("menu-animais-adotados")
-//     const menuPedidosAdocao = document.getElementById("menu-pedidos-adocao");
+    const user = authService.getTokenPayload();
+    type MenuKey =
+        | "home"
+        | "adocao"
+        | "animaisAdotados"
+        | "cadastroAnimal"
+        | "cadastroVoluntario"
+        | "cadastroAdministrador"
+        | "cadastroUsuario"
+        | "pedidosAdocao"
+        | "login";
+    const menus: Record<string, HTMLElement | null> = {
+        home: document.getElementById("menu-home"),
+        adocao: document.getElementById("menu-adocao"),
+        animaisAdotados: document.getElementById("menu-animais-adotados"),
+        cadastroAnimal: document.getElementById("menu-cadastro-animal"),
+        cadastroVoluntario: document.getElementById("menu-cadastro-voluntario"),
+        cadastroAdministrador: document.getElementById("menu-cadastro-administrador"),
+        cadastroUsuario: document.getElementById("menu-cadastro-usuario"),
+        pedidosAdocao: document.getElementById("menu-pedidos-adocao"),
+        login: document.getElementById("menu-login")
+    };
 
-//     if(user) {
-//         if (loginMenu) loginMenu.style.display = "none";
-//         if (cadastrarUsuarioComum) cadastrarUsuarioComum.style.display = "none";
+    const mostrar = (id: MenuKey) => {
+        const menu = menus[id];
+        if (menu) {
+            menu.style.display = "inline";
+        }
+    };
 
-//         if (logoutMenu) logoutMenu.style.display = "inline";
-//         if (animaisAdotados) animaisAdotados.style.display = "inline";
+    const esconderTodos = () => {
+        Object.values(menus).forEach(menu => {
+            if (menu) menu.style.display = "none";
+        });
+    };
 
-//         const isAdmin = user.tipo_usuario === "admin";
-//         const isVoluntario = user.tipo_usuario === "voluntario";
 
-//         if (cadastroAnimal) cadastroAnimal.style.display = (isAdmin || isVoluntario) ? "inline" : "none";
-//         if (cadastroAdmnistrador) cadastroAdmnistrador.style.display = isAdmin ? "inline" : "none"
-//         if (cadastrarUsuarioVoluntario) cadastrarUsuarioVoluntario.style.display = isAdmin ? "inline" : "none";
-//         if (menuPedidosAdocao) menuPedidosAdocao.style.display = isAdmin ? "inline" : "none";
+    const permissoes: Record<string, MenuKey[]> = {
+    DESLOGADO: ["home", "adocao", "cadastroUsuario", "login"],
+    COMUM: ["home", "adocao", "cadastroUsuario", "animaisAdotados"],
+    VOLUNTARIO: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "pedidosAdocao"],
+    ADMINISTRADOR: Object.keys(menus) as MenuKey[]
+    };
 
-//     }
-//     else {
-//         if (loginMenu) loginMenu.style.display = "inline";
-//         if (cadastrarUsuarioComum) cadastrarUsuarioComum.style.display = "inline";
+    esconderTodos();
 
-//         if (logoutMenu) logoutMenu.style.display = "none";
-//         if (cadastroAnimal) cadastroAnimal.style.display = "none";
-//         if (cadastroAdmnistrador) cadastroAdmnistrador.style.display = "none";
-//         if (cadastrarUsuarioVoluntario) cadastrarUsuarioVoluntario.style.display = "none";
-//         if (animaisAdotados) animaisAdotados.style.display = "none";
-//         if (menuPedidosAdocao) menuPedidosAdocao.style.display = "none";
-//     }
-// }
+    // Define o tipo do usuário
+    const tipoUsuario = user?.id_usuario ? user.tipo_usuario : "DESLOGADO";
+
+    // Mostra apenas o que é permitido
+    permissoes[tipoUsuario].forEach(mostrar);
+}
+
+

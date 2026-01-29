@@ -2,7 +2,7 @@
 import { getApiBaseUrl } from '../../config/env.config';
 
 export interface User {
- 
+
   email: string;
   tipoUsuario: 'COMUM' | 'ADMINISTRADOR' | 'VOLUNTARIO';
 }
@@ -23,8 +23,8 @@ class AuthService {
         },
         body: JSON.stringify({
           email,
-          senha 
-          }),
+          senha
+        }),
       });
 
       if (!response.ok) {
@@ -59,19 +59,29 @@ class AuthService {
     if (this.currentUser) {
       return this.currentUser;
     }
-    
+
     const userStr = localStorage.getItem('user');
     if (userStr) {
       this.currentUser = JSON.parse(userStr);
       return this.currentUser;
     }
-    
+
     return null;
   }
-getToken(): string | null {
+  
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 
+  getTokenPayload(): any | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    const payloadBase64 = token.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    return JSON.parse(payloadJson);
+  }
   /**
    * Verificar se está autenticado
    */

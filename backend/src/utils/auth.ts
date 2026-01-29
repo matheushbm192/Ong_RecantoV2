@@ -20,8 +20,9 @@ export function autenticarToken(req: Request, res: Response, next: NextFunction)
     }
 
     req.user = {
+      id_usuario: decoded.id_usuario,
       email: decoded.email,
-      tipoUsuario: decoded.tipoUsuario
+      tipo_usuario: decoded.tipo_usuario
     };
     
     next();

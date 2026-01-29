@@ -1,6 +1,8 @@
 import { Pet } from './models/petModel';
 import { buildApiUrl } from './utils/api';
+import { atualizarInterfaceUsuario } from "./main";
 
+atualizarInterfaceUsuario();
 export async function InitializeAnimaisAdotadosPage() {
   const lista = document.getElementById('adotados-list');
   if (!lista) return;

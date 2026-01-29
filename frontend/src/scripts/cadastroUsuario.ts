@@ -1,8 +1,9 @@
+import { atualizarInterfaceUsuario } from "./main";
 import { Usuario} from "./models/usuarioModel";
 import { buildApiUrl } from "./utils/api";
 //import { cadastrarUsuarioComum } from "./routes/rota-cadastro-usuario-comum";
 
-
+atualizarInterfaceUsuario();
 // Função para inicializar a página de cadastro de usuário
 export function initializeCadastroUsuarioComumPage(): void {
     const form = document.getElementById('formulario-cadastro-usuario-comum') as HTMLFormElement;
