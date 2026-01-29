@@ -1,4 +1,4 @@
-import { UsuarioAdministrador } from "./models/usuarioModel";
+import { UsuarioAdministrador } from "./models/usuarioAdministradorModel";
 import { buildApiUrl } from "./utils/api";
 
 // Função para aplicar máscara de CEP (00000-000)
@@ -134,13 +134,13 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
         });
 
         const adm: UsuarioAdministrador = {
+            tipo_usuario: "ADMINISTRADOR",
             nome: formData.get('nome') as string,
             sobrenome: formData.get('sobrenome') as string,
             email: formData.get('email') as string,
             senha: formData.get('senha') as string,
             dataNascimento: formData.get('dataNascimento') as string,
             cpf: formData.get('cpf') as string,
-            cep: formData.get('cep') as string,
             logradouro: formData.get('logradouro') as string,
             numero: formData.get('numero') as (string | undefined) || undefined,
             complemento: formData.get('complemento') as (string | undefined) || undefined,
@@ -148,11 +148,8 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
             cidade: formData.get('cidade') as string,
             estado: formData.get('estado') as string,
             telefone: formData.get('telefone') as string,
-            redeSocial: formData.get('redeSocial') as (string | undefined) || undefined,
             escolaridade: formData.get('escolaridade') as string,
             possuiPet: formData.get('temPet') === 'sim',
-            quantosAnimais: formData.get('quantAnimais') as (string | undefined) || undefined,
-            especiePet: especiesPets,
             funcao: formData.get('funcao') as string,
         };
 
@@ -162,16 +159,11 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
         if (!adm.senha.trim()) return alert('Preencha a senha.');
         if (!adm.dataNascimento) return alert('Preencha a data de nascimento.');
         if (!adm.cpf.trim()) return alert('Preencha o CPF.');
-        if (!adm.logradouro.trim()) return alert('Preencha o logradouro.');
-        if (!adm.bairro.trim()) return alert('Preencha o bairro.');
-        if (!adm.cidade.trim()) return alert('Preencha a cidade.');
         if (!adm.estado) return alert('Preencha o estado.');
         if (!adm.telefone.trim()) return alert('Preencha o telefone.');
         if (!adm.escolaridade) return alert('Preencha a escolaridade.');
         if (!adm.funcao.trim()) return alert('Preencha a função.');
-        if (adm.possuiPet && (!adm.quantosAnimais || especiesPets.length === 0)) {
-            return alert('Preencha quantos animais e a espécie.');
-        }
+        
 
         console.log("🚀 Enviando requisição para cadastrar administrador");
 

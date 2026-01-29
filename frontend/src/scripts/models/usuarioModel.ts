@@ -1,13 +1,13 @@
 
     export interface Usuario {
-        id: number;
+        id? : number;
         nome: string;
         sobrenome: string;
         email: string;
         senha: string;
         dataNascimento: string;
         cpf: string;    
-        telefone?: string;
+        telefone: string;
         tipo_usuario: "COMUM" | "VOLUNTARIO" | "ADMINISTRADOR";
         id_rede_social?: string;
         escolaridade?: string | null;
@@ -18,7 +18,7 @@
         bairro?: string | null;
         cidade?:  string | null;
         estado?: string | null;
-        contribuir_ong: boolean; //TROCAR NO FRONT PARA BOOL
-        deseja_adotar: boolean; 
-        criado_em: string;
+        contribuir_ong?: boolean; //TROCAR NO FRONT PARA BOOL
+        deseja_adotar?: boolean; 
+        criado_em? : string;
     }

@@ -7,9 +7,8 @@
         senha: string;
         dataNascimento: string;
         cpf: string;    
-        telefone?: string;
+        telefone: string;
         tipo_usuario: "COMUM" | "VOLUNTARIO" | "ADMINISTRADOR";
-        id_rede_social?: string;
         escolaridade?: string | null;
         possuiPet: boolean;
         logradouro?: string;

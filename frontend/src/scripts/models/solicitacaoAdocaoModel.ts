@@ -5,5 +5,5 @@ export interface SolicitacaoAdocao{
     id_pet: number;
     id_administrador?: number | null; // Pode ser undefined ou null se não for preenchido
     status: "PENDENTE" | "APROVADA" | "REPROVADA";
-    data_solicitacao: string;
+    data_solicitacao?: string;
 }

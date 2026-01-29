@@ -1,4 +1,4 @@
-import { UsuarioComum } from "./models/usuarioModel";
+import { Usuario} from "./models/usuarioModel";
 import { buildApiUrl } from "./utils/api";
 //import { cadastrarUsuarioComum } from "./routes/rota-cadastro-usuario-comum";
 
@@ -13,29 +13,33 @@ export function initializeCadastroUsuarioComumPage(): void {
 
 // Função para lidar com o envio do formulário
 async function handleFormSubmit(event: Event): Promise<void> {
+
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
+
     // Coletar dados do formulário
-    const usuario: UsuarioComum = {
+    const usuario: Usuario = {
+
     nome: formData.get('nome') as string,
     sobrenome: formData.get('sobrenome') as string,
     email: formData.get('email') as string,
     senha: formData.get('senha') as string,
     dataNascimento: formData.get('dataNascimento') as string,
     cpf: formData.get('cpf') as string,
-    logradouro: formData.get('logradouro') as string,
-    numero: formData.get('numero') as string || undefined,
-    complemento: formData.get('complemento') as string || undefined,
-    bairro: formData.get('bairro') as string,
-    cidade: formData.get('cidade') as string,
-    estado: formData.get('estado') as string,
     telefone: formData.get('telefone') as string,
-    redeSocial: formData.get('redeSocial') as string || undefined,
+    tipo_usuario: "COMUM",
     escolaridade: formData.get('escolaridade') as string,
     possuiPet: formData.get('possuiPet') === "sim"? true : false as boolean,
-    contribuirOng: formData.get('contribuirOng') as "sim" | "nao" | "nao sei",
-    desejaAdotar: formData.get('desejaAdotar') as "sim" | "nao" | "nao sei"
+    logradouro: formData.get('logradouro') as string || undefined,
+    numero: formData.get('numero') as string || undefined,
+    complemento: formData.get('complemento') as string || undefined,
+    bairro: formData.get('bairro') as string || undefined,
+    cidade: formData.get('cidade') as string || undefined,
+    estado: formData.get('estado') as string || undefined,
+    contribuir_ong: formData.get('contribuirOng') === "sim"? true : false as boolean,
+    deseja_adotar: formData.get('desejaAdotar') === "sim"? true : false as boolean
+
     };
     
     // Validar dados obrigatórios
@@ -65,23 +69,6 @@ async function handleFormSubmit(event: Event): Promise<void> {
         alert('Por favor, preencha o CPF.');
         return;
     }
-    
-    if (!usuario.logradouro.trim()) {
-        alert('Por favor, preencha o logradouro.');
-        return;
-    }
-    if (!usuario.bairro.trim()) {
-        alert('Por favor, preencha o bairro.');
-        return;
-    }
-    if (!usuario.cidade.trim()) {
-        alert('Por favor, preencha a cidade.');
-        return;
-    }
-    if (!usuario.estado) {
-        alert('Por favor, selecione o estado.');
-        return;
-    }
     if (!usuario.telefone.trim()) {
         alert('Por favor, preencha o telefone.');
         return;
@@ -95,12 +82,12 @@ async function handleFormSubmit(event: Event): Promise<void> {
         return;
     }
     
-    if (!usuario.desejaAdotar) {
+    if (!usuario.deseja_adotar) {
         alert('Por favor, selecione se deseja adotar um animal.');
         return;
     }
     
-    if (!usuario.contribuirOng) {
+    if (!usuario.contribuir_ong) {
         alert('Por favor, selecione se gostaria de contribuir com a ONG.');
         return;
     }

@@ -1,4 +1,4 @@
-import { UsuarioVoluntario } from "./models/usuarioModel";
+import { UsuarioVoluntario } from "./models/usuarioVoluntarioModel";
 import { buildApiUrl } from "./utils/api";
 
 // Função para inicializar a página de cadastro de voluntário
@@ -110,6 +110,7 @@ async function handleFormSubmitVoluntario(event: Event): Promise<void> {
     });
 
     const voluntario: UsuarioVoluntario = {
+        tipo_usuario:  "VOLUNTARIO",
         nome: formData.get('nome') as string,
         sobrenome: formData.get('sobrenome') as string,
         email: formData.get('email') as string,
@@ -123,14 +124,13 @@ async function handleFormSubmitVoluntario(event: Event): Promise<void> {
         cidade: formData.get('cidade') as string,
         estado: formData.get('estado') as string,
         telefone: formData.get('telefone') as string,
-        redeSocial: formData.get('redeSocial') as string || undefined,
         escolaridade: formData.get('escolaridade') as string,
         possuiPet: formData.get('temPet') === 'sim', 
-        habilidade: formData.get('habilidades') as string, 
-        experiencia: formData.get('experiencia') as string || undefined,
-        quantosAnimais: formData.get('quantAnimais') as string || undefined,
-        especiePet: especiesPetsValues as string[] || undefined,
-        funcao: formData.get('funcao') as string 
+        //habilidade: formData.get('habilidades') as string, 
+        //experiencia: formData.get('experiencia') as string || undefined,
+        //quantosAnimais: formData.get('quantAnimais') as string || undefined,
+        //especiePet: especiesPetsValues as string[] || undefined,
+        //funcao: formData.get('funcao') as string 
     };
 
     // Validações básicas
@@ -141,13 +141,13 @@ async function handleFormSubmitVoluntario(event: Event): Promise<void> {
         { campo: voluntario.senha, mensagem: 'Por favor, preencha a senha.' },
         { campo: voluntario.dataNascimento, mensagem: 'Por favor, preencha a data de nascimento.' },
         { campo: voluntario.cpf, mensagem: 'Por favor, preencha o CPF.' },
-        { campo: voluntario.logradouro, mensagem: 'Por favor, preencha o logradouro.' },
-        { campo: voluntario.bairro, mensagem: 'Por favor, preencha o bairro.' },
-        { campo: voluntario.cidade, mensagem: 'Por favor, preencha a cidade.' },
-        { campo: voluntario.estado, mensagem: 'Por favor, selecione o estado.' },
+        //{ campo: voluntario.logradouro, mensagem: 'Por favor, preencha o logradouro.' },
+        //{ campo: voluntario.bairro, mensagem: 'Por favor, preencha o bairro.' },
+        //{ campo: voluntario.cidade, mensagem: 'Por favor, preencha a cidade.' },
+        //{ campo: voluntario.estado, mensagem: 'Por favor, selecione o estado.' },
         { campo: voluntario.telefone, mensagem: 'Por favor, preencha o telefone.' },
-        { campo: voluntario.escolaridade, mensagem: 'Por favor, selecione a escolaridade.' },
-        {campo: voluntario.funcao, mensagem: 'Por favor, preencha a funçõa exercida na ONG'}
+        //{ campo: voluntario.escolaridade, mensagem: 'Por favor, selecione a escolaridade.' }
+        //{campo: voluntario.funcao, mensagem: 'Por favor, preencha a funçõa exercida na ONG'}
         
     ];
 

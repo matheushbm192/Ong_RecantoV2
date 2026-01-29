@@ -67,8 +67,7 @@ function mapPedidoToSolicitacao(pedido: PedidoAdocaoCompleto, novoResultado: "Ap
         id_pet: pedido.animal.id_pet as any, // UUID
         id_usuario: pedido.adotante.idUsuario as any, // UUID
         id_administrador: null, 
-        status: "Concluido",
-        resultado: novoResultado
+        status: "APROVADA",
     };
 }
 
