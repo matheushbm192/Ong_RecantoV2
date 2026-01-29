@@ -1,7 +1,7 @@
 import { atualizarInterfaceUsuario } from "./main";
 import { RotaLogin } from "./utils/rotaLogin";
 
-atualizarInterfaceUsuario();
+
 export function initializeLogin() {
   setTimeout(() => {
     const form = document.getElementById('login-form') as HTMLFormElement;

@@ -13,7 +13,7 @@ export function atualizarInterfaceUsuario() {
         | "cadastroUsuario"
         | "pedidosAdocao"
         | "login";
-    const menus: Record<string, HTMLElement | null> = {
+    const menus: Record<MenuKey, HTMLElement | null> = {
         home: document.getElementById("menu-home"),
         adocao: document.getElementById("menu-adocao"),
         animaisAdotados: document.getElementById("menu-animais-adotados"),
@@ -49,7 +49,10 @@ export function atualizarInterfaceUsuario() {
     esconderTodos();
 
     // Define o tipo do usuário
-    const tipoUsuario = user?.id_usuario ? user.tipo_usuario : "DESLOGADO";
+    const tipoUsuario: keyof typeof permissoes =
+    user && user.id_usuario
+        ? user.tipo_usuario
+        : "DESLOGADO";
 
     // Mostra apenas o que é permitido
     permissoes[tipoUsuario].forEach(mostrar);
