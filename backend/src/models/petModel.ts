@@ -1,5 +1,4 @@
-import { UUID } from "crypto"
-import { FotoPet } from "./fotoPet"
+import { FotoPet } from "./fotoPetModel"
 
 export interface Pet {
   id: number
@@ -13,10 +12,10 @@ export interface Pet {
   cep?: string | null
   logradouro?: string | null
   numero?: string | null
-  bairro: string
-  cidade: string
-  estado: string
-  criado_em: string
+  bairro?: string | null
+  cidade?: string | null
+  estado?: string | null
+  criado_em?: string | null
   id_usuario?: number | null
   data_adocao?: string | null
 }

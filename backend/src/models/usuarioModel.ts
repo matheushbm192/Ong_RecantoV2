@@ -1,23 +1,24 @@
-    import { UUID } from "crypto";
 
     export interface Usuario {
-        idUsuario: UUID;
-        created_at: string;
-        tipoUsuario: "COMUM" | "VOLUNTARIO" | "ADMINISTRADOR";
+        id: number;
         nome: string;
         sobrenome: string;
         email: string;
         senha: string;
         dataNascimento: string;
         cpf: string;    
-        telefone: string;
-        redeSocial?: string;
-        escolaridade: string;
+        telefone?: string;
+        tipo_usuario: "COMUM" | "VOLUNTARIO" | "ADMINISTRADOR";
+        id_rede_social?: string;
+        escolaridade?: string | null;
         possuiPet: boolean;
-        logradouro: string;
-        numero: string | undefined;
-        complemento: string | undefined;
-        bairro: string;
-        cidade:  string;
-        estado: string;
+        logradouro?: string;
+        numero?: string | null;
+        complemento?: string | null;
+        bairro?: string | null;
+        cidade?:  string | null;
+        estado?: string | null;
+        contribuir_ong: boolean;
+        deseja_adotar: ConstrainBooleanParameters; 
+        criado_em: string;
     }
