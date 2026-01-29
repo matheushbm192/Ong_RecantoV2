@@ -76,7 +76,7 @@ export async function renderPage(page: number = 1): Promise<void> {
     const li = document.createElement("li");
     li.className = "bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition-shadow duration-300";
     li.innerHTML = `
-      <img src="${buildApiUrl(pet.fotos)}" alt="${pet.nome}" class="w-full h-48 object-cover" />
+      <img src="${buildApiUrl(pet.fotos![0].foto_url)}" alt="${pet.nome}" class="w-full h-48 object-cover" />
       <div class="p-4 flex flex-col flex-grow">
         <h2 class="text-xl font-semibold mb-2 text-[#357a38]">${pet.nome}</h2>
         <ul class="text-gray-700 flex-grow space-y-1">
