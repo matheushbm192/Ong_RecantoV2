@@ -5,7 +5,7 @@ export class RotaLogin {
     public static async postLogin(email: string, senha: string) {
         const mensagemSucesso = document.getElementById('mensagem') as HTMLElement;
         const mensagemErro = document.getElementById('mensagemErro') as HTMLElement;
-        fetch(buildApiUrl('/login'), {
+        fetch(buildApiUrl('/api/login'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

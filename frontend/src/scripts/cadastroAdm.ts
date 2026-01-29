@@ -161,10 +161,8 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
         if (!adm.senha.trim()) return alert('Preencha a senha.');
         if (!adm.dataNascimento) return alert('Preencha a data de nascimento.');
         if (!adm.cpf.trim()) return alert('Preencha o CPF.');
-        if (!adm.estado) return alert('Preencha o estado.');
         if (!adm.telefone.trim()) return alert('Preencha o telefone.');
-        if (!adm.escolaridade) return alert('Preencha a escolaridade.');
-        if (!adm.funcao.trim()) return alert('Preencha a função.');
+        //if (!adm.funcao.trim()) return alert('Preencha a função.');
         
 
         console.log("🚀 Enviando requisição para cadastrar administrador");
