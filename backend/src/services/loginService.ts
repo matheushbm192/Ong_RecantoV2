@@ -30,7 +30,7 @@ export class LoginRN {
         // possivelmente alterar para user
         const payload = {
             email: user.email,
-            tipo_usuario: user.tipo_usuario
+            tipo_usuario: user.tipoUsuario
         }
 
         if (config.nodeEnv === 'development') {

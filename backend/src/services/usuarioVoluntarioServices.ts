@@ -61,7 +61,7 @@ export class UsuarioVoluntarioRN {
       throw new Error('Escolaridade é obrigatória.');
     }
 
-    if (usuarioData.tipo_usuario !== "voluntario") {
+    if (usuarioData.tipoUsuario !== "VOLUNTARIO") {
       throw new Error('Usuário não possui perfil de voluntário.');
     }
 

@@ -22,7 +22,7 @@ app.use(corsMiddleware);
 setupStaticFiles(app);
 setupBodyParser(app);
 app.use(loggerMiddleware);
-
+//http://localhost:3000/api/pets
 // --- Definição de Rotas ---
 app.use('/api', rotas);
 
@@ -41,5 +41,6 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`Log Level: ${config.logLevel}`);
     console.log(`======================================\n`);
 });
+
 
 export default app;

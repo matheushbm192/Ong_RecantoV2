@@ -1,79 +1,102 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <title>ONG Recanto dos Animais - Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>ONG Recanto dos Animais - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
+
 <body class="relative bg-white">
-    <header class="absolute top-0 left-0 w-full z-30">
-        <nav class="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
-            <div>
-                <a href="./index.html" class="flex w-52 h-52 rounded-full overflow-hidden cursor-pointer" aria-label="Voltar para a página inicial">
-                    <img alt="Logo ONG" class="w-full h-full object-contain" height="56" src="./assets/resources/logo.svg" width="56" />
-                </a>
-            </div>
-            <ul class="hidden md:flex items-center space-x-6 text-sm font-normal">
-                <li><a href="./index.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Home</a></li>
-                <li><a href="./adocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Adote um Animal</a></li>
-                <li><a href="./animaisAdotados.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Animais Adotados</a></li>
-                <li><a href="./cadastrarAnimais.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro de Animais</a></li>
-                <li><a href="./cadastroVoluntario.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastrar Voluntário</a></li>
-                <li><a href="./cadastroAdm.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Admin</a></li>
-                <li><a href="./cadastroUsuario.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Usuário</a></li>
-                <li><a href="./pedidosAdocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Pedidos de Adoção</a></li>
-                <li><a href="./login.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Login</a></li>
-            </ul>
-            <div class="hidden md:flex items-center space-x-4">
-                <a class="bg-yellow-400 text-black text-xs font-semibold rounded-full px-4 py-2 hover:bg-yellow-300 transition" href="#">FAÇA UMA DOAÇÃO</a>
-                <a aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300" href="https://www.facebook.com/recantodosanimaisourobranco/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                <a aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300" href="https://www.instagram.com/ong.recanto/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-            </div>
-        </nav>
-    </header>
-    <main id="principal">
-<section class="bg-white flex items-center justify-center h-screen">
-  <div class="absolute inset-0 bg-[url('./assets/resources/caes_e_gatos.png')] bg-cover bg-center opacity-10"></div>
-
-  <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg relative z-10 " style="margin-top: 100px;">
-    <div class="text-center">
-      <h1 class="text-2xl font-bold">Bem vindo de volta!</h1>
-    </div>
-
-    <form id="login-form" class="space-y-4">
+  <header class="absolute top-0 left-0 w-full z-30">
+    <nav class="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="email" name="email" placeholder="Seu email..." class="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500">
+        <a href="./index.html" class="flex w-52 h-52 rounded-full overflow-hidden cursor-pointer"
+          aria-label="Voltar para a página inicial">
+          <img alt="Logo ONG" class="w-full h-full object-contain" height="56" src="../assets/resource/logo.svg"
+            width="56" />
+        </a>
       </div>
-      <div>
-        <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
-        <input type="password" id="senha" name="senha" placeholder="Sua senha..." class="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500">
+      <ul class="hidden md:flex items-center space-x-6 text-sm font-normal">
+        <li><a href="./index.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Home</a></li>
+        <li><a href="./adocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Adote um
+            Animal</a></li>
+        <li><a href="./animaisAdotados.html"
+            class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Animais Adotados</a></li>
+        <li><a href="./cadastrarAnimais.html"
+            class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro de Animais</a></li>
+        <li><a href="./cadastroVoluntario.html"
+            class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastrar Voluntário</a></li>
+        <li><a href="./cadastroAdm.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro
+            Admin</a></li>
+        <li><a href="./cadastroUsuario.html"
+            class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Usuário</a></li>
+        <li><a href="./pedidosAdocao.html"
+            class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Pedidos de Adoção</a></li>
+        <li><a href="./login.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Login</a></li>
+      </ul>
+      <div class="hidden md:flex items-center space-x-4">
+        <a class="bg-yellow-400 text-black text-xs font-semibold rounded-full px-4 py-2 hover:bg-yellow-300 transition"
+          href="#">FAÇA UMA DOAÇÃO</a>
+        <a aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300"
+          href="https://www.facebook.com/recantodosanimaisourobranco/" target="_blank" rel="noopener noreferrer"><i
+            class="fab fa-facebook-f"></i></a>
+        <a aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300"
+          href="https://www.instagram.com/ong.recanto/" target="_blank" rel="noopener noreferrer"><i
+            class="fab fa-instagram"></i></a>
       </div>
-      <button type="submit" class="w-full py-2 px-4 bg-yellow-500 text-white font-bold rounded-md shadow hover:bg-yellow-600">Entrar</button>
-    </form>
+    </nav>
+  </header>
+  <main id="principal">
+    <section class="bg-white flex items-center justify-center h-screen">
+      <div class="absolute inset-0 bg-[url('../assets/resource/caes_e_gatos.png')] bg-cover bg-center opacity-10"></div>
 
-    <!-- Mensagens de sucesso e erro -->
-    <div id="mensagem" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-      <p class="text-center font-semibold">Login realizado com sucesso!</p>
-    </div>
+      <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg relative z-10 "
+        style="margin-top: 100px;">
+        <div class="text-center">
+          <h1 class="text-2xl font-bold">Bem vindo de volta!</h1>
+        </div>
 
-    <div id="mensagemErro" class="hidden mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-      <p class="text-center font-semibold">Erro ao realizar login. Verifique os campos e tente novamente.</p>
-    </div>
-  </div>
-</section>
-    </main>
-    <footer class="bg-[#1f2a5a] text-yellow-400 py-6 text-center text-xs">
-        © 2024 Recanto dos Animais - Todos os direitos reservados.
-    </footer>
-    <a aria-label="WhatsApp" class="fixed bottom-6 right-6 bg-[#27387f] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1e2a66] transition" href="#">
-        <i class="fab fa-whatsapp fa-lg"></i>
-    </a>
-    
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email" name="email" placeholder="Seu email..."
+              class="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500">
+          </div>
+          <div>
+            <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Sua senha..."
+              class="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500">
+          </div>
+          <button type="submit"
+            class="w-full py-2 px-4 bg-yellow-500 text-white font-bold rounded-md shadow hover:bg-yellow-600">Entrar</button>
+        </form>
+
+        <!-- Mensagens de sucesso e erro -->
+        <div id="mensagem" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+          <p class="text-center font-semibold">Login realizado com sucesso!</p>
+        </div>
+
+        <div id="mensagemErro" class="hidden mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          <p class="text-center font-semibold">Erro ao realizar login. Verifique os campos e tente novamente.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-[#1f2a5a] text-yellow-400 py-6 text-center text-xs">
+    © 2024 Recanto dos Animais - Todos os direitos reservados.
+  </footer>
+  <a aria-label="WhatsApp"
+    class="fixed bottom-6 right-6 bg-[#27387f] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1e2a66] transition"
+    href="#">
+    <i class="fab fa-whatsapp fa-lg"></i>
+  </a>
+
 </body>
+
 </html>

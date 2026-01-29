@@ -1,16 +1,22 @@
 // pedidosAdocaoRoutes.ts
 import { Router, Request, Response } from 'express'
 import { PedidoAdocaoController } from "../controllers/pedidoAdocaoController";
-import { PedidoAdocaoCompleto } from "../models/pedidoAdocao";
+import { autenticarToken } from '../utils/auth';
+import { autorizarTipoUsuario } from '../utils/nivelAutorarizacao';
 
 const router = Router();
 
 const pedidoAdocao = new PedidoAdocaoController();
-// --- Rota GET para Pedidos de Adoção ---
-//router.get("/", async (req: Request, res: Response) => await pedidoAdocao.getPedidosAdocao(req, res));
 
-router.post("/aprovar", async (req: Request, res: Response) => {
-    await pedidoAdocao.aprovarPedidoAdocao(req, res);
-});
+router.get("/", 
+    autenticarToken,
+    autorizarTipoUsuario("ADMINISTRADOR"),
+    pedidoAdocao.getPedidosAdocao);
+
+router.post("/aprovar",
+    autenticarToken,
+    autorizarTipoUsuario("ADMINISTRADOR"),
+    pedidoAdocao.aprovarPedidoAdocao
+);
 
 export default router;

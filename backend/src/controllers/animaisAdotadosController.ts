@@ -13,13 +13,13 @@ export class AnimaisAdotadosCTR {
 
             console.log("ANIMAIS ADOTADOOOO")
             
-            const id_usuario = req.body.id_usuario; 
+            const idUsuario = req.body.idUsuario; 
             
-            const animaisAdotados = await animaisAdotadosRN.selectAnimaisAdotadoByUsuarioId(id_usuario);
+            const animaisAdotados = await animaisAdotadosRN.selectAnimaisAdotadoByUsuarioId(idUsuario);
             console.log("CONTROLLER ANIMAIS ADOTADOS")
             console.log(animaisAdotados)
-
-            return res.status(200).json({ animaisAdotados });
+            res.status(200).json({ animaisAdotados });
+           
         } catch (error: any) {
             console.error("Erro ao buscar animais:", error);
             res.status(500).json({ error: error.message });

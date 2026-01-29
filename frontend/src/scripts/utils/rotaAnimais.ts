@@ -3,12 +3,13 @@ import { buildApiUrl } from './api';
 export class PetRota {
 
     public static getAllPets() {
-        return fetch(buildApiUrl('/api/petGet'))
+        return fetch(buildApiUrl('/api/pets'))
             .then(async (res) => {
                 if (!res.ok) {
                     const error = await res.text();
                     throw new Error(error || 'Erro ao carregar tela home');
                 }
+
                 return res.json();
             })
             .then(data => {
@@ -22,7 +23,7 @@ export class PetRota {
     }
 
     public static postPet(formData: FormData): Promise<boolean> {
-        return fetch(buildApiUrl('/api/petsPost'), {
+        return fetch(buildApiUrl('/api/pets'), {
             method: 'POST',
             body: formData,
         })

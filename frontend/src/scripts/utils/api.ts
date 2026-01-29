@@ -29,9 +29,9 @@ export async function fetchAPI(url: string, options: RequestInit = {}): Promise<
 /**
  * Constrói URL completa da API
  */
-export function buildApiUrl(endpoint: string | null): string {
+export function buildApiUrl(endpoint: string | null | undefined): string {
   const baseUrl = getApiBaseUrl();
-  if (endpoint === null) {
+  if (endpoint === null || endpoint === undefined) {
     return baseUrl;
   }
   return `${baseUrl}${endpoint.startsWith('/') ? endpoint : '/' + endpoint}`;

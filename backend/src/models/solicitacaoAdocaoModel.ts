@@ -5,6 +5,6 @@ export interface SolicitacaoAdocao{
     idPet: UUID;
     idUsuario: UUID;
     idAdministrador?: UUID | null; // Pode ser undefined ou null se não for preenchido
-    status: "Pendente" | "Concluido";
-    resultado: "Aprovado" | "Reprovado" | null;
+    status: "PENDENTE" | "CONCLUIDA" | "APROVADA";
+    resultado: "APROVADA" | "REPROVADA" | null;
 }

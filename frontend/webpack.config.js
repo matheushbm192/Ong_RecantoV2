@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const fs = require('fs');
 const dotenv = require('dotenv');
 
@@ -15,6 +16,15 @@ if (fs.existsSync(envFile)) {
 } else {
   console.warn(`⚠️  Arquivo ${envFile} não encontrado. Usando valores padrão.`);
 }
+
+// Pega todas as variáveis de ambiente e prepara para injeção
+const getEnvVars = () => {
+  return {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    'process.env.REACT_APP_API_URL_STAGING': JSON.stringify(process.env.REACT_APP_API_URL_STAGING || ''),
+    'process.env.REACT_APP_API_URL_PRODUCTION': JSON.stringify(process.env.REACT_APP_API_URL_PRODUCTION || ''),
+  };
+};
 
 // Gera entry points dinamicamente para cada script
 const getEntries = () => {
@@ -63,6 +73,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
     assetModuleFilename: 'assets/[name][ext]',
+    publicPath: '/', // Importante para os caminhos dos assets
   },
   module: {
     rules: [
@@ -78,6 +89,9 @@ module.exports = {
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'assets/resources/[name][ext]'
+        }
       },
     ],
   },
@@ -89,12 +103,27 @@ module.exports = {
       '@styles': path.resolve(__dirname, 'src/styles/'),
       '@assets': path.resolve(__dirname, 'src/assets/'),
     },
+    fallback: {
+      // Caso use algumas libs Node.js no browser
+      "path": false,
+      "fs": false,
+    }
   },
-  plugins: getHtmlPlugins(),
+  plugins: [
+    // Injeta variáveis de ambiente no código do browser
+    new webpack.DefinePlugin(getEnvVars()),
+    ...getHtmlPlugins(),
+  ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'src/assets'),
-    },
+    static: [
+      {
+        directory: path.join(__dirname, 'src/assets'),
+        publicPath: '/assets',
+      },
+      {
+        directory: path.join(__dirname, 'dist'),
+      }
+    ],
     port: 3001,
     hot: true,
     historyApiFallback: true,

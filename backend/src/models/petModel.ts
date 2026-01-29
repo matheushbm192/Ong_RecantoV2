@@ -1,19 +1,22 @@
 import { UUID } from "crypto"
+import { FotoPet } from "./fotoPet"
 
 export interface Pet {
-  idPet: UUID
+  id: number
   nome: string
   raca?: string | null
-  especie?: string | null
-  sexo: string
+  especie: string 
+  sexo: "M" | "F" 
   idade?: number | null
-  fotoUrl?: string | null
-  cep?: string | null
-  logradouro: string
-  numero?: number | null
   complemento?: string | null
+  fotoUrl?: FotoPet[] | null
+  cep?: string | null
+  logradouro?: string | null
+  numero?: string | null
   bairro: string
   cidade: string
   estado: string
-  createdAt: string
+  criado_em: string
+  id_usuario?: number | null
+  data_adocao?: string | null
 }

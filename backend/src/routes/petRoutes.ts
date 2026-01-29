@@ -7,12 +7,12 @@ import { autorizarTipoUsuario } from '../utils/nivelAutorarizacao';
 const petCTR = new PetCTR
 const router = Router()
 
-router.get('/petGet',
+router.get('/',
   petCTR.getAllPets
 );
 
 router.post(
-  '/pets',
+  '/',
   autenticarToken,  
   autorizarTipoUsuario('ADMINISTRADOR', 'VOLUNTARIO'), 
   upload.single('foto'),

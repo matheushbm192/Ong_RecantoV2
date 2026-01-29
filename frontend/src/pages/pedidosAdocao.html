@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +11,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
+
 <body class="relative bg-white">
     <header class="absolute top-0 left-0 w-full z-30">
         <nav class="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
             <div>
-                <a href="./index.html" class="flex w-52 h-52 rounded-full overflow-hidden cursor-pointer" aria-label="Voltar para a página inicial">
-                    <img alt="Logo ONG" class="w-full h-full object-contain" height="56" src="./assets/resources/logo.svg" width="56" />
+                <a href="./index.html" class="flex w-52 h-52 rounded-full overflow-hidden cursor-pointer"
+                    aria-label="Voltar para a página inicial">
+                    <img alt="Logo ONG" class="w-full h-full object-contain" height="56"
+                        src="../assets/resource/logo.svg" width="56" />
                 </a>
             </div>
             <ul class="hidden md:flex items-center space-x-6 text-sm font-normal">
-                <li><a href="./index.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Home</a></li>
-                <li><a href="./adocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Adote um Animal</a></li>
-                <li><a href="./animaisAdotados.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Animais Adotados</a></li>
-                <li><a href="./cadastrarAnimais.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro de Animais</a></li>
-                <li><a href="./cadastroVoluntario.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastrar Voluntário</a></li>
-                <li><a href="./cadastroAdm.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Admin</a></li>
-                <li><a href="./cadastroUsuario.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Usuário</a></li>
-                <li><a href="./pedidosAdocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Pedidos de Adoção</a></li>
-                <li><a href="./login.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Login</a></li>
+                <li><a href="./index.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Home</a></li>
+                <li><a href="./adocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Adote
+                        um Animal</a></li>
+                <li><a href="./animaisAdotados.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Animais Adotados</a></li>
+                <li><a href="./cadastrarAnimais.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro de Animais</a>
+                </li>
+                <li><a href="./cadastroVoluntario.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastrar Voluntário</a>
+                </li>
+                <li><a href="./cadastroAdm.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Admin</a></li>
+                <li><a href="./cadastroUsuario.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Usuário</a></li>
+                <li><a href="./pedidosAdocao.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Pedidos de Adoção</a>
+                </li>
+                <li><a href="./login.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Login</a></li>
             </ul>
             <div class="hidden md:flex items-center space-x-4">
-                <a class="bg-yellow-400 text-black text-xs font-semibold rounded-full px-4 py-2 hover:bg-yellow-300 transition" href="#">FAÇA UMA DOAÇÃO</a>
-                <a aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300" href="https://www.facebook.com/recantodosanimaisourobranco/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                <a aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300" href="https://www.instagram.com/ong.recanto/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a class="bg-yellow-400 text-black text-xs font-semibold rounded-full px-4 py-2 hover:bg-yellow-300 transition"
+                    href="#">FAÇA UMA DOAÇÃO</a>
+                <a aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300"
+                    href="https://www.facebook.com/recantodosanimaisourobranco/" target="_blank"
+                    rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300"
+                    href="https://www.instagram.com/ong.recanto/" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-instagram"></i></a>
             </div>
         </nav>
     </header>
@@ -49,7 +70,7 @@
                 <label for="animal" class="block font-semibold mb-1">Animal:</label>
                 <select id="animal" class="w-full mb-4 border rounded px-2 py-1">
                     <option value="">Todas</option>
-                </select> 
+                </select>
 
                 <label for="filtro-idade" class="block font-semibold mb-1">Idade do Animal:</label>
                 <select id="filtro-idade" class="w-full mb-4 border rounded px-2 py-1">
@@ -65,7 +86,8 @@
                     <option value="">Todos</option>
                 </select>
 
-                <button id="btn-clear-filters" class="bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 transition w-full">
+                <button id="btn-clear-filters"
+                    class="bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 transition w-full">
                     Limpar Filtros
                 </button>
             </aside>
@@ -78,9 +100,12 @@
     <footer class="bg-[#1f2a5a] text-yellow-400 py-6 text-center text-xs">
         © 2024 Recanto dos Animais - Todos os direitos reservados.
     </footer>
-    <a aria-label="WhatsApp" class="fixed bottom-6 right-6 bg-[#27387f] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1e2a66] transition" href="#">
+    <a aria-label="WhatsApp"
+        class="fixed bottom-6 right-6 bg-[#27387f] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1e2a66] transition"
+        href="#">
         <i class="fab fa-whatsapp fa-lg"></i>
     </a>
-    
+
 </body>
+
 </html>

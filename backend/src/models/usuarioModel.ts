@@ -1,9 +1,9 @@
     import { UUID } from "crypto";
 
     export interface Usuario {
-        id_usuario: UUID;
+        idUsuario: UUID;
         created_at: string;
-        tipo_usuario: "comum" | "voluntario" | "admin";
+        tipoUsuario: "COMUM" | "VOLUNTARIO" | "ADMINISTRADOR";
         nome: string;
         sobrenome: string;
         email: string;

@@ -5,12 +5,15 @@ import { Pet } from "../models/petModel";
 class PetDAO {
     // retorna todos os pets cadastrados no sistema
     async selectPets(): Promise<Pet[]> {
-        const { data, error } = await database.from("PET").select("*")
+        const { data, error } = await database.from("pet").select("*")
 
         if(error) {
             console.log(error.message)
             // sobe o erro para o controller
             throw new Error(error.message)
+        }
+        if (data === null || data === undefined) {
+            return []
         }
         return data as Pet[]
     }

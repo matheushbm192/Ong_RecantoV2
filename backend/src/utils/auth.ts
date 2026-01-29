@@ -21,7 +21,7 @@ export function autenticarToken(req: Request, res: Response, next: NextFunction)
 
     req.user = {
       email: decoded.email,
-      tipoUsuario: decoded.tipo_usuario
+      tipoUsuario: decoded.tipoUsuario
     };
     
     next();

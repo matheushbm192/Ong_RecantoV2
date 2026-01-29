@@ -42,7 +42,7 @@ export class UsuarioVoluntarioCTR {
         : [req.body.especiePet];
 
       const novoUsuario: UsuarioVoluntario = {
-        id_usuario: randomUUID(),
+        idUsuario: randomUUID(),
         nome,
         sobrenome,
         email,
@@ -65,7 +65,7 @@ export class UsuarioVoluntarioCTR {
         especiePet: especiePet || null,
         funcao,
         created_at: new Date().toISOString(),
-        tipo_usuario: 'voluntario'
+        tipoUsuario: "VOLUNTARIO"
       };
 
       const resultado = await usuarioVoluntarioRN.insertUsuarioVoluntario(novoUsuario);

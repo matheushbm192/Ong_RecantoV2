@@ -61,18 +61,18 @@ export class PetCTR {
         estado
       });
 
-      const foto_url = req.file ? `/uploads/${req.file.filename}` : null;
-      console.log("Foto URL:", foto_url);
+      const fotoUrl = req.file ? `/uploads/${req.file.filename}` : null;
+      console.log("Foto URL:", fotoUrl);
 
      
       const novoPet: Pet = {
-        id_pet: randomUUID() ,
+        id: 0, // o ID será gerado pelo banco de dados
         nome,
         raca: raca || null,
         especie: especie || null,
         sexo,
         idade: idade ? parseInt(idade, 10) : null,
-        foto_url,
+        fotoUrl,
         cep: cep || null,
         logradouro,
         numero: numero ? parseInt(numero, 10) : null,
@@ -80,7 +80,7 @@ export class PetCTR {
         bairro,
         cidade,
         estado,
-        created_at: new Date().toISOString()
+        criado_em: new Date().toISOString()
       };
 
       console.log("Pet a ser inserido:", novoPet);
