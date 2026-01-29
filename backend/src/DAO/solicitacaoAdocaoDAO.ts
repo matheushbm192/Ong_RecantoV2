@@ -16,18 +16,6 @@ export class SolicitacaoAdocaoDAO {
         }
     }
 
-    async getSolicitacaoPorIdUsuario(id_usuario: number): Promise<SolicitacaoAdocao[]> {
-        try {
-            const solicitacoes = await sql<SolicitacaoAdocao[]>`
-                SELECT * FROM solicitacao_adocao
-                WHERE id_usuario = ${id_usuario}
-            `;
-            return solicitacoes;
-        } catch (error) {
-            console.error("Erro ao buscar solicitações de adoção:", error);
-            throw error;
-        }
-    }
 
     async aprovarSolicitacaoAdocao(id_solicitacao: number, id_administrador: number): Promise<void> {
 
@@ -113,33 +101,4 @@ export class SolicitacaoAdocaoDAO {
         }
     }
 
-    // const pedidoCompleto: PedidoAdocaoCompleto = {
-    //                 idPedido: String(pedido.id || pedido.id_solicitacao),
-    //                 dataSolicitacao: pedido.data_solicitacao || pedido.created_at || new Date().toISOString(),
-    //                 status: pedido.status as "Pendente" | "Concluido",
-    //                 resultado: pedido.resultado as "Aprovado" | "Reprovado" | null || null,
-                    
-    //                 adotante: {
-    //                     idUsuario: String(usuarioData.id_usuario || usuarioData.id),
-    //                     nomeCompleto: `${usuarioData.nome || ''} ${usuarioData.sobrenome || ''}`.trim(),
-    //                     email: usuarioData.email || '',
-    //                     telefone: usuarioData.telefone || '',
-    //                     cpf: usuarioData.cpf || '',
-    //                     enderecoCompleto: this.montarEnderecoCompleto(usuarioData) || null,
-    //                     redeSocial: usuarioData.rede_social || usuarioData.redeSocial || null,
-    //                     escolaridade: usuarioData.escolaridade || '',
-    //                     possuiPet: usuarioData.possui_pet ?? usuarioData.possuiPet ?? null,
-    //                 },
-                    
-    //                 animal: {
-    //                     id_pet: String(petData.id_pet || petData.id),
-    //                     nome: petData.nome || '',
-    //                     raca: petData.raca || null,
-    //                     especie: petData.especie || null,
-    //                     sexo: petData.sexo || '',
-    //                     idade: petData.idade ? Number(petData.idade) : null,
-    //                     foto_url: petData.foto_url || petData.imagem || null,
-    //                     localizacaoCompleta: this.montarLocalizacaoCompleta(petData),
-    //                 },
-    //             };
 }

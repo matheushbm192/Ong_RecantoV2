@@ -1,15 +1,18 @@
-import database from "../database/databaseClient"
+import sql from "../database/databaseClient"
+import { Usuario } from "../models/usuarioModel"
 
 export class LoginDAO {
     // Alterar para retornar Promise<User>
     async selectUserByEmail(email: string) {
-        const { data, error } = await database.from("USUARIO").select("*").eq("email", email).single()
+        const usuario = await sql<Usuario[]>`
+            SELECT * FROM usuario WHERE email = ${email}
+        `
 
-        if (error || !data) {
+        if (usuario.length === 0) {
             return null
         }
 
-        return data
+        return usuario[0]
     }
 }
 

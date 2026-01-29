@@ -1,5 +1,5 @@
 import { CreatePetDTO, Pet } from '../models/petModel';
-import PetDAO from '../DAO/petDAO';
+import {PetDAO} from '../DAO/petDAO';
 
 export class PetRN {
   private petDao: PetDAO;
@@ -70,5 +70,18 @@ export class PetRN {
       throw error;
     }
 
+  }
+
+  async selectPetsPorUsuarioId(id_usuario: number): Promise<Pet[]> {
+    try {
+      console.log("=== PETRN - CHAMANDO DAO ===");
+      const resultados = await this.petDao.selectPetsPorUsuarioId(id_usuario);
+      console.log("=== PETRN - PETS SELECIONADOS COM SUCESSO ===");
+      return resultados;
+    } catch (error) {
+      console.error("=== PETRN - ERRO NO DAO ===");
+      console.error("Erro capturado na PetRN:", error);
+      throw error;
+    }
   }
 }

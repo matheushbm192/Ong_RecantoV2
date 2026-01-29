@@ -3,9 +3,8 @@ import database from "../database/databaseClient";
 import { UsuarioVoluntario } from "../models/usuarioVoluntarioModel";
 
 export class UsuarioVoluntarioDAO{
-    async insertUsuarioVoluntario(
-    usuario: UsuarioVoluntario
-): Promise<UsuarioVoluntario> {
+    
+    async insertUsuarioVoluntario(usuario: UsuarioVoluntario): Promise<UsuarioVoluntario> {
 
     try {
         const {

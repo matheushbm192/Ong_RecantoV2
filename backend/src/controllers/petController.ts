@@ -2,14 +2,32 @@ import { Request, Response } from 'express'
 import { MulterRequest } from '../interfaceConfig/MulterRequest';
 import { CreatePetDTO, Pet } from '../models/petModel'
 import { PetRN } from '../services/petService';
-import mustache from 'mustache';
-import fs from 'fs';
-import path from 'path';
-import { randomUUID } from 'crypto';
+
 
 const petRN = new PetRN();
 
 export class PetCTR {
+  async getAnimaisAdotadosPorUsuarioId(req: Request, res: Response) {
+    try {
+
+      console.log("REQUEST CONTROLLER")
+      console.log(req.body)
+
+      console.log("ANIMAIS ADOTADOOOO")
+   
+      const id_usuario = req.body.id_usuario;
+
+      const animaisAdotados = await petRN.selectPetsPorUsuarioId(id_usuario);
+      console.log("CONTROLLER ANIMAIS ADOTADOS")
+      console.log(animaisAdotados)
+      res.status(200).json({ animaisAdotados });
+
+    } catch (error: any) {
+      console.error("Erro ao buscar animais:", error);
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   async getAllPets(req: Request, res: Response) {
     try {
 
@@ -85,7 +103,7 @@ export class PetCTR {
 
       // Chama a regra de negócio
       console.log("Chamando PetRN.insertPet...");
-      const resultado = await petRN.insertPet(novoPet,fotoUrl);
+      const resultado = await petRN.insertPet(novoPet, fotoUrl);
       console.log("Pet inserido com sucesso:", resultado);
 
       res.status(201).send('<p>Animal cadastrado com sucesso!</p>');

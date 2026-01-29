@@ -3,7 +3,7 @@ import sql from "../database/databaseClient";
 import { CreatePetDTO, Pet } from "../models/petModel";
 
 
-class PetDAO {
+export class PetDAO {
     // retorna todos os pets cadastrados no sistema
     async selectPets(): Promise<Pet[]> {
         try {
@@ -72,7 +72,20 @@ class PetDAO {
 
         return pet[0];
     }
+
+    async selectPetsPorUsuarioId(id_usuario: number): Promise<Pet[]> {
+        try {
+            const pets = await sql<Pet[]>`
+            SELECT * FROM pet WHERE id_usuario = ${id_usuario}
+        `;
+            return pets;
+        } catch (error) {
+            console.error('Erro ao buscar pets por usuário:', error);
+            throw error; 
+        }
+    }
 }
 
 
-export default PetDAO
+
+
