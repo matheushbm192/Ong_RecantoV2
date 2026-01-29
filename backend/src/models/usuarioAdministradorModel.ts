@@ -1,7 +1,8 @@
 import { Usuario } from "./usuarioModel";
 
 export interface UsuarioAdministrador extends Usuario {
-    quantosAnimais?: string;
-    especiePet?: string[];
+    id: number; 
+    id_usuario: number
+    id_colab_especies_pets: number
     funcao: string;
 }
