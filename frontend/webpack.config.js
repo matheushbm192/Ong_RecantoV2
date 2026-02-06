@@ -41,6 +41,7 @@ const getEntries = () => {
     });
   }
   
+  console.log('📝 Entry points gerados:', Object.keys(entries));
   return entries;
 };
 
@@ -52,11 +53,13 @@ const getHtmlPlugins = () => {
   }
   
   const htmlFiles = fs.readdirSync(htmlDir).filter(file => file.endsWith('.html'));
+  console.log('🌐 Arquivos HTML encontrados:', htmlFiles);
   
   return htmlFiles.map(file => {
     const name = path.parse(file).name;
     // Mapeia cada HTML para seu script correspondente
     const chunkName = name === 'index' ? 'main' : name;
+    console.log(`  ✓ ${file} → chunk: ${chunkName}`);
     return new HtmlWebpackPlugin({
       template: path.join(htmlDir, file),
       filename: `${name}.html`,

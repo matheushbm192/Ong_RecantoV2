@@ -2,7 +2,10 @@ import authService from "./services/authService";
 
 export function atualizarInterfaceUsuario() {
 
+    console.log('[MAIN.atualizarInterfaceUsuario] Função chamada!');
+    
     const user = authService.getTokenPayload();
+    console.log('[MAIN] User payload:', user);
     type MenuKey =
         | "home"
         | "adocao"
@@ -55,6 +58,9 @@ export function atualizarInterfaceUsuario() {
         user && user.id_usuario
             ? user.tipo_usuario
             : "DESLOGADO";
+
+    console.log('[MAIN] Tipo de usuário:', tipoUsuario);
+    console.log('[MAIN] Menus a exibir:', permissoes[tipoUsuario]);
 
     // Mostra apenas o que é permitido
     permissoes[tipoUsuario].forEach(mostrar);
