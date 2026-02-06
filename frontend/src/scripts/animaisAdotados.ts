@@ -1,8 +1,15 @@
 import { Pet } from './models/petModel';
 import { buildApiUrl } from './utils/api';
 import { atualizarInterfaceUsuario } from "./main";
-
+import authService from "./services/authService";
 atualizarInterfaceUsuario();
+document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
+
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
 export async function InitializeAnimaisAdotadosPage() {
   const lista = document.getElementById('adotados-list');
   if (!lista) return;

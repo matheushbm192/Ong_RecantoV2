@@ -1,3 +1,4 @@
+import { atualizarInterfaceUsuario } from '@scripts/main';
 import { buildApiUrl } from './api';
 
 export class RotaLogin {
@@ -17,9 +18,12 @@ export class RotaLogin {
                 throw new Error(error || 'Falha ao fazer login');
             }
 
-            const token = await response.json();
-            localStorage.setItem('token', token);
+            const data = await response.json();
 
+          
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            atualizarInterfaceUsuario();
 
             if (mensagemErro) mensagemErro.classList.add('hidden');
 

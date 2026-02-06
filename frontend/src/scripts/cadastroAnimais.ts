@@ -1,7 +1,14 @@
 import { PetRota } from "./utils/rotaAnimais";
 import { atualizarInterfaceUsuario } from "./main";
-
+import authService from "./services/authService";
 atualizarInterfaceUsuario();
+document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
+
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
 setTimeout(() => {
     const botao = document.getElementById('btn-cadastrar');
 

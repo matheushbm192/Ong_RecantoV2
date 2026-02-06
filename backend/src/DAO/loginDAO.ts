@@ -9,7 +9,7 @@ export class LoginDAO {
         `
 
         if (usuario.length === 0) {
-            return null
+            throw new Error("Usuario não encontrado")
         }
 
         return usuario[0]

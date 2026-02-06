@@ -1,10 +1,11 @@
 // Serviço de autenticação
+import { atualizarInterfaceUsuario } from '@scripts/main';
 import { getApiBaseUrl } from '../../config/env.config';
 
 export interface User {
-
+  id_usuario: number;
   email: string;
-  tipoUsuario: 'COMUM' | 'ADMINISTRADOR' | 'VOLUNTARIO';
+  tipo_usuario: 'COMUM' | 'ADMINISTRADOR' | 'VOLUNTARIO';
 }
 
 class AuthService {
@@ -16,7 +17,12 @@ class AuthService {
    */
   async login(email: string, senha: string): Promise<User> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/login`, {
+      const url = `${this.apiBaseUrl}/api/login`;
+      console.log('[AuthService] Iniciando login...');
+      console.log('[AuthService] URL:', url);
+      console.log('[AuthService] Email:', email);
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,18 +33,24 @@ class AuthService {
         }),
       });
 
+      console.log('[AuthService] Response status:', response.status);
+
       if (!response.ok) {
-        throw new Error('Falha ao fazer login');
+        const errorData = await response.text();
+        console.log('[AuthService] Error response:', errorData);
+        throw new Error('Falha ao fazer login: ' + errorData);
       }
 
       const data = await response.json();
+      console.log('[AuthService] Login sucesso, dados:', data);
 
       this.currentUser = data.user;
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      atualizarInterfaceUsuario();
       return data.user;
     } catch (error) {
-      console.error('Erro no login:', error);
+      console.error('[AuthService] Erro no login:', error);
       throw error;
     }
   }
@@ -50,6 +62,7 @@ class AuthService {
     this.currentUser = null;
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    atualizarInterfaceUsuario()
   }
 
   /**
@@ -68,7 +81,7 @@ class AuthService {
 
     return null;
   }
-  
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -94,7 +107,7 @@ class AuthService {
    */
   temPermissao(roles: string[]): boolean {
     const user = this.getCurrentUser();
-    return user ? roles.includes(user.tipoUsuario) : false;
+    return user ? roles.includes(user.tipo_usuario) : false;
   }
 }
 

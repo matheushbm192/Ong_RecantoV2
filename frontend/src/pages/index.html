@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,37 +11,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
+
 <body class="relative bg-white">
     <header class="absolute top-0 left-0 w-full z-30">
         <nav class="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
             <div>
-                <a href="./index.html" class="flex w-52 h-52 rounded-full overflow-hidden cursor-pointer" aria-label="Voltar para a página inicial">
-                    <img alt="Logo ONG" class="w-full h-full object-contain" height="56" src="../assets/resource/logo.svg" width="56" />
+                <a href="./index.html" class="flex w-52 h-52 rounded-full overflow-hidden cursor-pointer"
+                    aria-label="Voltar para a página inicial">
+                    <img alt="Logo ONG" class="w-full h-full object-contain" height="56"
+                        src="../assets/resource/logo.svg" width="56" />
                 </a>
             </div>
             <ul class="hidden md:flex items-center space-x-6 text-sm font-normal">
-                <li id="menu-home"><a href="./index.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Home</a></li>
-                <li id="menu-adocao"><a href="./adocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Adote um Animal</a></li>
-                <li id="menu-animais-adotados"><a href="./animaisAdotados.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Animais Adotados</a></li>
-                <li id="menu-cadastro-animal"><a href="./cadastrarAnimais.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro de Animais</a></li>
-                <li id="menu-cadastro-voluntario"><a href="./cadastroVoluntario.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastrar Voluntário</a></li>
-                <li id="menu-cadastro-administrador"><a href="./cadastroAdm.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Admin</a></li>
-                <li id="menu-cadastro-usuario"><a href="./cadastroUsuario.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Cadastro Usuário</a></li>
-                <li id="menu-pedidos-adocao"><a href="./pedidosAdocao.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Pedidos de Adoção</a></li>
-                <li id="menu-login"><a href="./login.html"
-                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">Login</a></li>
+                <li id="menu-home">
+                    <a href="./index.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Home
+                    </a>
+                </li>
+
+                <li id="menu-adocao">
+                    <a href="./adocao.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Adote um Animal
+                    </a>
+                </li>
+
+                <li id="menu-animais-adotados" class="hidden">
+                    <a href="./animaisAdotados.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Animais Adotados
+                    </a>
+                </li>
+
+                <li id="menu-cadastro-animal" class="hidden">
+                    <a href="./cadastrarAnimais.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Cadastro de Animais
+                    </a>
+                </li>
+
+                <li id="menu-cadastro-voluntario" class="hidden">
+                    <a href="./cadastroVoluntario.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Cadastrar Voluntário
+                    </a>
+                </li>
+
+                <li id="menu-cadastro-administrador" class="hidden">
+                    <a href="./cadastroAdm.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Cadastro Admin
+                    </a>
+                </li>
+
+                <li id="menu-cadastro-usuario">
+                    <a href="./cadastroUsuario.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Cadastro Usuário
+                    </a>
+                </li>
+
+                <li id="menu-pedidos-adocao" class="hidden">
+                    <a href="./pedidosAdocao.html"
+                        class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Pedidos de Adoção
+                    </a>
+                </li>
+
+                <li id="menu-login">
+                    <a href="./login.html" class="text-yellow-400 font-semibold hover:text-yellow-300 transition">
+                        Login
+                    </a>
+                </li>
+
+                <li id="menu-logout" style="display: none;">
+                    <a class="text-yellow-400 font-semibold hover:text-yellow-400 transition cursor-pointer" data-action="logout">
+                        Logout
+                    </a>
+                </li>
+
             </ul>
             <div class="hidden md:flex items-center space-x-4">
-                <a class="bg-yellow-400 text-black text-xs font-semibold rounded-full px-4 py-2 hover:bg-yellow-300 transition" href="#">FAÇA UMA DOAÇÃO</a>
-                <a aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300" href="https://www.facebook.com/recantodosanimaisourobranco/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                <a aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300" href="https://www.instagram.com/ong.recanto/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a class="bg-yellow-400 text-black text-xs font-semibold rounded-full px-4 py-2 hover:bg-yellow-300 transition"
+                    href="#">FAÇA UMA DOAÇÃO</a>
+                <a aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300"
+                    href="https://www.facebook.com/recantodosanimaisourobranco/" target="_blank"
+                    rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300"
+                    href="https://www.instagram.com/ong.recanto/" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-instagram"></i></a>
             </div>
         </nav>
     </header>
@@ -49,14 +106,16 @@
             <section class="relative w-full h-[520px] md:h-[600px] lg:h-[600px] xl:h-[600px]">
                 <img alt="Imagem de gatos peludinhos no pátio com azulejo cinza, vários gatos andando e olhando para frente"
                     class="w-full h-full object-cover brightness-50" height="600"
-                    src="https://storage.googleapis.com/a1aa/image/6ab46009-3690-42f8-2745-1a30d00c32d3.jpg" width="1920" />
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 hero-content-centered">
+                    src="https://storage.googleapis.com/a1aa/image/6ab46009-3690-42f8-2745-1a30d00c32d3.jpg"
+                    width="1920" />
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 hero-content-centered">
                     <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-lg">
                         Nossa missão é salvar<br />
                         vidas de 4 patas!
                     </h1>
                     <a class="mt-6 bg-yellow-400 text-black text-xs font-semibold rounded-full px-6 py-2 hover:bg-yellow-300 transition"
-                        href="./adocao.html">ADOTE UM ANIMAL</a> 
+                        href="./adocao.html">ADOTE UM ANIMAL</a>
                 </div>
                 <button aria-label="Previous slide"
                     class="absolute top-1/2 left-2 transform -translate-y-1/2 text-white text-2xl opacity-70 hover:opacity-100">
@@ -71,24 +130,39 @@
             <section class="max-w-7xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-6 justify-center">
                 <article class="bg-[#27387f] text-white rounded-md p-8 max-w-sm flex flex-col items-center text-center">
                     <img alt="Ícone branco de gato sentado, símbolo de apadrinhamento" class="mb-4" height="48"
-                        src="https://storage.googleapis.com/a1aa/image/b9549b75-3a20-4246-353c-e2398a28c9cd.jpg" width="48" />
+                        src="https://storage.googleapis.com/a1aa/image/b9549b75-3a20-4246-353c-e2398a28c9cd.jpg"
+                        width="48" />
                     <h3 class="text-yellow-400 font-bold text-lg mb-3">Faça uma Doação</h3>
-                    <p class="text-xs leading-relaxed mb-6">Sua doação é essencial para que possamos continuar resgatando, alimentando e cuidando dos animais que mais precisam. Cada contribuição, por menor que seja, representa mais esperança, mais saúde e mais chances de um recomeço. Doe amor. Doe cuidado. Doe vida.</p>
-                    <a class="border border-white rounded-full px-6 py-2 text-xs hover:bg-white hover:text-[#27387f] transition" href="#">SAIBA MAIS</a>
+                    <p class="text-xs leading-relaxed mb-6">Sua doação é essencial para que possamos continuar
+                        resgatando, alimentando e cuidando dos animais que mais precisam. Cada contribuição, por menor
+                        que seja, representa mais esperança, mais saúde e mais chances de um recomeço. Doe amor. Doe
+                        cuidado. Doe vida.</p>
+                    <a class="border border-white rounded-full px-6 py-2 text-xs hover:bg-white hover:text-[#27387f] transition"
+                        href="#">SAIBA MAIS</a>
                 </article>
                 <article class="bg-[#27387f] text-white rounded-md p-8 max-w-sm flex flex-col items-center text-center">
                     <img alt="Ícone branco de cachorro sentado, símbolo de apadrinhamento" class="mb-4" height="48"
-                        src="https://storage.googleapis.com/a1aa/image/daee70cf-b71e-422c-43c5-fa0e899234b2.jpg" width="48" />
+                        src="https://storage.googleapis.com/a1aa/image/daee70cf-b71e-422c-43c5-fa0e899234b2.jpg"
+                        width="48" />
                     <h3 class="text-yellow-400 font-bold text-lg mb-3">Apadrinhe um Peludo</h3>
-                    <p class="text-xs leading-relaxed mb-6">Nem todos os animais podem ser adotados de imediato, mas com o apadrinhamento você se torna parte da vida deles. Sua contribuição ajuda a cobrir custos com ração, cuidados médicos e muito amor. Mesmo à distância, você faz toda a diferença na história de um animal resgatado.</p>
-                    <a class="border border-white rounded-full px-6 py-2 text-xs hover:bg-white hover:text-[#27387f] transition" href="#">SAIBA MAIS</a>
+                    <p class="text-xs leading-relaxed mb-6">Nem todos os animais podem ser adotados de imediato, mas com
+                        o apadrinhamento você se torna parte da vida deles. Sua contribuição ajuda a cobrir custos com
+                        ração, cuidados médicos e muito amor. Mesmo à distância, você faz toda a diferença na história
+                        de um animal resgatado.</p>
+                    <a class="border border-white rounded-full px-6 py-2 text-xs hover:bg-white hover:text-[#27387f] transition"
+                        href="#">SAIBA MAIS</a>
                 </article>
                 <article class="bg-[#27387f] text-white rounded-md p-8 max-w-sm flex flex-col items-center text-center">
                     <img alt="Ícone branco de gato sentado, símbolo de adoção" class="mb-4" height="48"
-                        src="https://storage.googleapis.com/a1aa/image/822bb0b8-2a19-4ec8-7208-514d1f50277a.jpg" width="48" />
+                        src="https://storage.googleapis.com/a1aa/image/822bb0b8-2a19-4ec8-7208-514d1f50277a.jpg"
+                        width="48" />
                     <h3 class="text-yellow-400 font-bold text-lg mb-3">Não compre. Adote!</h3>
-                    <p class="text-xs leading-relaxed mb-6">Milhares de animais esperam por uma segunda chance em abrigos, nas ruas, ou em lares temporários. Ao adotar, você não só oferece amor e segurança para quem tanto sofreu, como também abre espaço para que outros possam ser salvos. Adotar é um ato de compaixão, responsabilidade e transformação. </p>
-                    <a class="border border-white rounded-full px-6 py-2 text-xs hover:bg-white hover:text-[#27387f] transition" href="#">SAIBA MAIS</a>
+                    <p class="text-xs leading-relaxed mb-6">Milhares de animais esperam por uma segunda chance em
+                        abrigos, nas ruas, ou em lares temporários. Ao adotar, você não só oferece amor e segurança para
+                        quem tanto sofreu, como também abre espaço para que outros possam ser salvos. Adotar é um ato de
+                        compaixão, responsabilidade e transformação. </p>
+                    <a class="border border-white rounded-full px-6 py-2 text-xs hover:bg-white hover:text-[#27387f] transition"
+                        href="#">SAIBA MAIS</a>
                 </article>
             </section>
 
@@ -98,22 +172,22 @@
                     <div class="w-16 h-[2px] bg-yellow-400 mx-auto mb-6"></div>
                     <p class="max-w-[600px] mx-auto mb-10 leading-tight text-base">
                         A ONG Recanto dos Animais foi fundada em 2012, por um grupo de voluntários que se
-                        uniram com o objetivo de amparar o Poder Público na função de zelar pela proteção 
+                        uniram com o objetivo de amparar o Poder Público na função de zelar pela proteção
                         de animais abandonados e vítimas de maus tratos.
                     </p>
 
                     <p class="max-w-[600px] mx-auto mb-10 leading-tight text-base">
-                        Para tanto, a ONG promove campanhas de educação e conscientização, mutirões de castração, 
-                        feiras de adoção, ações judiciais na defesa dos animais e do meio ambiente, campanhas e 
-                        eventos para arrecadação de verbas destinadas ao suporte de animais desamparados, assistência 
-                        com medicação, orientação, tratamento e cuidados com animais que se encontram na rua ou em 
+                        Para tanto, a ONG promove campanhas de educação e conscientização, mutirões de castração,
+                        feiras de adoção, ações judiciais na defesa dos animais e do meio ambiente, campanhas e
+                        eventos para arrecadação de verbas destinadas ao suporte de animais desamparados, assistência
+                        com medicação, orientação, tratamento e cuidados com animais que se encontram na rua ou em
                         lares temporários, entre outras medidas.
                     </p>
 
                     <p class="max-w-[600px] mx-auto mb-10 leading-tight text-base">
-                        Vale ressaltar que a ONG Recanto dos Animais não possui ligação com empresas, clínicas ou 
-                        administração pública, dependendo exclusivamente de doações para realizar seu trabalho, e, 
-                        assim como todas as organizações não governamentais, não visa qualquer forma de lucro. 
+                        Vale ressaltar que a ONG Recanto dos Animais não possui ligação com empresas, clínicas ou
+                        administração pública, dependendo exclusivamente de doações para realizar seu trabalho, e,
+                        assim como todas as organizações não governamentais, não visa qualquer forma de lucro.
                     </p>
                 </div>
             </section>
@@ -123,14 +197,14 @@
                 <div class="md:w-1/2 text-[9px] md:text-[10px] leading-relaxed text-center md:text-left">
                     <h3 class="font-bold text-[#1f2a5a] text-2xl mb-3">Olá, somos a ONG Recanto dos Animais!</h3>
                     <div class="w-16 h-[2px] bg-[#1f2a5a] mb-6 mx-auto md:mx-0"></div>
-                    <p class="mb-4 text-base">Um grupo de voluntários unidos por um sentimento em comum: amor aos animais.<br></p>
+                    <p class="mb-4 text-base">Um grupo de voluntários unidos por um sentimento em comum: amor aos
+                        animais.<br></p>
                     <p class="mb-4 text-base">
                         <span class="font-bold text-[#1f2a5a]">Junte-se a nós nesta causa!</span>
                     </p>
                 </div>
                 <div class="md:w-1/2 flex justify-center md:justify-end mt-8 md:mt-0">
-                    <img src="../assets/resource/GrupoONG.jpeg"
-                        alt="Foto do grupo da ONG Recanto dos Animais"
+                    <img src="../assets/resource/GrupoONG.jpeg" alt="Foto do grupo da ONG Recanto dos Animais"
                         class="rounded shadow-md w-56 h-72 object-cover" loading="lazy" />
                 </div>
             </section>
@@ -139,9 +213,12 @@
     <footer class="bg-[#1f2a5a] text-yellow-400 py-6 text-center text-xs">
         © 2024 Recanto dos Animais - Todos os direitos reservados.
     </footer>
-    <a aria-label="WhatsApp" class="fixed bottom-6 right-6 bg-[#27387f] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1e2a66] transition" href="#">
+    <a aria-label="WhatsApp"
+        class="fixed bottom-6 right-6 bg-[#27387f] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1e2a66] transition"
+        href="#">
         <i class="fab fa-whatsapp fa-lg"></i>
     </a>
-  
+
 </body>
+
 </html>

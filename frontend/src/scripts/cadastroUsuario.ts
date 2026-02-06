@@ -1,6 +1,7 @@
 import { atualizarInterfaceUsuario } from "./main";
 import { Usuario} from "./models/usuarioModel";
 import { buildApiUrl } from "./utils/api";
+import authService from "./services/authService";
 //import { cadastrarUsuarioComum } from "./routes/rota-cadastro-usuario-comum";
 
 atualizarInterfaceUsuario();
@@ -11,7 +12,13 @@ export function initializeCadastroUsuarioComumPage(): void {
         form.addEventListener('submit', handleFormSubmit);
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
 
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
 // Função para lidar com o envio do formulário
 async function handleFormSubmit(event: Event): Promise<void> {
 

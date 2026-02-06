@@ -12,7 +12,8 @@ export function atualizarInterfaceUsuario() {
         | "cadastroAdministrador"
         | "cadastroUsuario"
         | "pedidosAdocao"
-        | "login";
+        | "login"
+        | "logout";
     const menus: Record<MenuKey, HTMLElement | null> = {
         home: document.getElementById("menu-home"),
         adocao: document.getElementById("menu-adocao"),
@@ -22,7 +23,8 @@ export function atualizarInterfaceUsuario() {
         cadastroAdministrador: document.getElementById("menu-cadastro-administrador"),
         cadastroUsuario: document.getElementById("menu-cadastro-usuario"),
         pedidosAdocao: document.getElementById("menu-pedidos-adocao"),
-        login: document.getElementById("menu-login")
+        login: document.getElementById("menu-login"),
+        logout: document.getElementById("menu-logout")
     };
 
     const mostrar = (id: MenuKey) => {
@@ -40,22 +42,31 @@ export function atualizarInterfaceUsuario() {
 
 
     const permissoes: Record<string, MenuKey[]> = {
-    DESLOGADO: ["home", "adocao", "cadastroUsuario", "login"],
-    COMUM: ["home", "adocao", "cadastroUsuario", "animaisAdotados"],
-    VOLUNTARIO: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "pedidosAdocao"],
-    ADMINISTRADOR: Object.keys(menus) as MenuKey[]
+        DESLOGADO: ["home", "adocao", "cadastroUsuario", "login"],
+        COMUM: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "logout"],
+        VOLUNTARIO: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "pedidosAdocao", "logout"],
+        ADMINISTRADOR: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "cadastroAnimal", "cadastroVoluntario", "cadastroAdministrador", "pedidosAdocao", "logout"]
     };
 
     esconderTodos();
 
     // Define o tipo do usuário
     const tipoUsuario: keyof typeof permissoes =
-    user && user.id_usuario
-        ? user.tipo_usuario
-        : "DESLOGADO";
+        user && user.id_usuario
+            ? user.tipo_usuario
+            : "DESLOGADO";
 
     // Mostra apenas o que é permitido
     permissoes[tipoUsuario].forEach(mostrar);
 }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
+
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
+
+atualizarInterfaceUsuario()
 

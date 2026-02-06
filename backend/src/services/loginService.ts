@@ -11,7 +11,8 @@ export class LoginRN {
         this.loginDAO = new LoginDAO();
     }
 
-    async autenticarUsuario(email: string, senha: string): Promise<string> {
+    /** Autentica usuário e retorna objeto com token e dados públicos do usuário */
+    async autenticarUsuario(email: string, senha: string): Promise<{ token: string, user: { id_usuario: number, email: string, tipo_usuario: string } }> {
         const user: Usuario = await this.loginDAO.selectUserByEmail(email)
 
         if (config.nodeEnv === 'development') {
@@ -27,10 +28,11 @@ export class LoginRN {
             throw new Error("Senha incorreta")
         }
         
-        // possivelmente alterar para user
+        // Construir payload e objeto público do usuário com campos esperados pelo frontend
         const payload = {
+            id_usuario: user.id,
             email: user.email,
-            tipo_usuario: user.tipoUsuario
+            tipo_usuario: user.tipo_usuario
         }
 
         if (config.nodeEnv === 'development') {
@@ -51,6 +53,13 @@ export class LoginRN {
             console.log(jwt.decode(token))
         }
 
-        return token     
+        // Retornar objeto unificado com token e dados públicos do usuário
+        const publicUser = {
+            id_usuario: user.id,
+            email: user.email,
+            tipo_usuario: user.tipo_usuario
+        }
+
+        return { token, user: publicUser }     
     }
 }

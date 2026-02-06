@@ -1,7 +1,7 @@
 import { atualizarInterfaceUsuario } from "./main";
 import { UsuarioVoluntario } from "./models/usuarioVoluntarioModel";
 import { buildApiUrl } from "./utils/api";
-
+import authService from "./services/authService";
 atualizarInterfaceUsuario();
 // Função para inicializar a página de cadastro de voluntário
 export function initializeCadastroVoluntarioPage(): void {
@@ -13,7 +13,13 @@ export function initializeCadastroVoluntarioPage(): void {
     // Adicionar event listeners para os campos de pet
     setupPetFields();
 }
+document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
 
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
 function setupPetFields(): void {
     const temPetSim = document.getElementById('temPetSim') as HTMLInputElement | null;
     const temPetNao = document.getElementById('naoTemPet') as HTMLInputElement | null;

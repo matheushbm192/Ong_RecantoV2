@@ -2,6 +2,7 @@ import { Pet } from "./models/petModel"
 import { PetRota } from "./utils/rotaAnimais";
 import { buildApiUrl } from "./utils/api";
 import { atualizarInterfaceUsuario } from "./main";
+import authService from "./services/authService";
 let petList: HTMLUListElement;
 let prevBtn: HTMLButtonElement;
 let nextBtn: HTMLButtonElement;
@@ -26,6 +27,13 @@ function getFilteredPets(): Pet[] {
   );
 }
 atualizarInterfaceUsuario();
+document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
+
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
 function popularFiltros(pets: Pet[]): void {
   // Limpa opções antigas
   filtroRaca.innerHTML = "<option value=''>Todas</option>";

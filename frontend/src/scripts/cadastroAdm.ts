@@ -1,8 +1,15 @@
 import { atualizarInterfaceUsuario } from "./main";
 import { UsuarioAdministrador } from "./models/usuarioAdministradorModel";
 import { buildApiUrl } from "./utils/api";
-
+import authService from "./services/authService";
 atualizarInterfaceUsuario();
+document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('[data-action="logout"]');
+
+        logoutLink?.addEventListener('click', () => {
+            authService.logout();
+        });
+    });
 // Função para aplicar máscara de CEP (00000-000)
 function formatarCEP(event: Event): void {
     const input = event.target as HTMLInputElement;
