@@ -18,11 +18,37 @@ const app = express();
 const PORT = config.port;
 
 // --- Configurar Middlewares ---
+app.use((req, res, next) => {
+    console.log('\n🌐 ===== REQUISIÇÃO CHEGOU NO SERVIDOR =====');
+    console.log(`📍 ${req.method} ${req.path}`);
+    console.log(`⏰ ${new Date().toISOString()}`);
+    console.log(`🔐 Authorization: ${req.headers.authorization ? 'PRESENTE' : 'AUSENTE'}`);
+    console.log(`📦 Content-Type: ${req.headers['content-type']}`);
+    console.log('='.repeat(50));
+    next();
+});
+
 app.use(corsMiddleware);
 setupStaticFiles(app);
 setupBodyParser(app);
+
+// Log após body parser
+app.use((req, res, next) => {
+    console.log('✅ [APÓS BODY PARSER] req.body está disponível');
+    console.log(`📦 Body:', ${JSON.stringify(req.body).substring(0, 100)}...`);
+    next();
+});
+
 app.use(loggerMiddleware);
 //http://localhost:3000/api/pets
+// Log antes de rotear para /api
+app.use((req, res, next) => {
+    if (req.path.startsWith('/api')) {
+        console.log(`🎯 [ANTES DE /api] ${req.method} ${req.path}`);
+    }
+    next();
+});
+
 // --- Definição de Rotas ---
 app.use('/api', rotas);
 

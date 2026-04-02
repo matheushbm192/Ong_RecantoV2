@@ -23,8 +23,14 @@ export class PetRota {
     }
 
     public static postPet(formData: FormData): Promise<boolean> {
+        const token = localStorage.getItem('token');
+     
         return fetch(buildApiUrl('/api/pets'), {
             method: 'POST',
+            headers: {
+
+                'Authorization': `Bearer ${token}`
+            },
             body: formData,
         })
             .then(res => {

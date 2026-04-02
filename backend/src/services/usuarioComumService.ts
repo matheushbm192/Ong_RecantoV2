@@ -1,4 +1,4 @@
-import { Usuario } from '../models/usuarioModel';
+import { Usuario, UsuarioPost } from '../models/usuarioModel';
 import { UsuarioComumDAO } from '../DAO/usuarioComumDAO';
 
 export class UsuarioComumRN {
@@ -8,7 +8,7 @@ export class UsuarioComumRN {
     this.usuarioComumDao = new UsuarioComumDAO();
   }
 
-  async insertUsuario(usuarioData: Usuario): Promise<Usuario> {
+  async insertUsuario(usuarioData: UsuarioPost): Promise<Usuario> {
     this.validarCampos(usuarioData);
 
     try {
@@ -22,7 +22,7 @@ export class UsuarioComumRN {
     }
   }
 
-  validarCampos(usuarioData: Usuario) {
+  validarCampos(usuarioData: UsuarioPost) {
     if (!usuarioData.nome) {
       throw new Error('Primeiro nome é obrigatório.');
     }

@@ -160,6 +160,8 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
             escolaridade: formData.get('escolaridade') as string,
             possuiPet: formData.get('temPet') === 'sim',
             funcao: formData.get('funcao') as string,
+            contribuir_ong: formData.get('contribuirOng') === 'sim',
+            deseja_adotar: formData.get('desejaAdotar') === 'sim',
         };
 
         // Validações básicas
@@ -173,11 +175,13 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
         
 
         console.log("🚀 Enviando requisição para cadastrar administrador");
+        console.log("📦 Dados sendo enviados:", JSON.stringify(adm, null, 2));
 
-        const response = await fetch(buildApiUrl('/usuario/usuarioAdministradorPost'), {
+        const response = await fetch(buildApiUrl('/usuarios/usuarioAdministradorPost'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authService.getToken()}`
             },
             body: JSON.stringify(adm),
         });
@@ -217,6 +221,24 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
 
 
 export function inicializarCadastroAdm(): void {
+    // 🔍 DEBUG: Verifica o token JWT armazenado
+    const token = authService.getToken();
+    if (token) {
+        try {
+            const decoded = JSON.parse(atob(token.split('.')[1]));
+            console.log('🔑 Token decodificado:', decoded);
+            console.log('👤 Seu tipo_usuario no token:', decoded.tipo_usuario);
+            console.log('⏰ Token expira em:', new Date(decoded.exp * 1000));
+            if (decoded.tipo_usuario !== 'ADMINISTRADOR') {
+                console.warn('⚠️ AVISO: Você NÃO é um ADMINISTRADOR! Seu tipo é:', decoded.tipo_usuario);
+            }
+        } catch (e) {
+            console.error('❌ Erro ao decodificar token:', e);
+        }
+    } else {
+        console.warn('⚠️ Nenhum token encontrado!');
+    }
+
     const form = document.getElementById('userForm') as HTMLFormElement;
     if (form) {
         form.addEventListener('submit', tratarEnvioFormulario);

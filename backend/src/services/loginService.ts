@@ -29,10 +29,13 @@ export class LoginRN {
         }
         
         // Construir payload e objeto público do usuário com campos esperados pelo frontend
+        // Normalizar tipo_usuario para MAIÚSCULAS para consistência
+        const tipoUsuarioNormalizado = user.tipo_usuario?.toUpperCase() || 'COMUM';
+        
         const payload = {
             id_usuario: user.id,
             email: user.email,
-            tipo_usuario: user.tipo_usuario
+            tipo_usuario: tipoUsuarioNormalizado
         }
 
         if (config.nodeEnv === 'development') {
@@ -57,7 +60,7 @@ export class LoginRN {
         const publicUser = {
             id_usuario: user.id,
             email: user.email,
-            tipo_usuario: user.tipo_usuario
+            tipo_usuario: tipoUsuarioNormalizado
         }
 
         return { token, user: publicUser }     

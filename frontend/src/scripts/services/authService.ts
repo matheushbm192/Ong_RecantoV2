@@ -17,7 +17,7 @@ class AuthService {
    */
   async login(email: string, senha: string): Promise<User> {
     try {
-      const url = `${this.apiBaseUrl}/api/login`;
+      const url = `${this.apiBaseUrl}/login`;
       console.log('[AuthService] Iniciando login...');
       console.log('[AuthService] URL:', url);
       console.log('[AuthService] Email:', email);

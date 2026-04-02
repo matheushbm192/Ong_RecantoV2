@@ -11,7 +11,7 @@ interface EnvironmentConfig {
 
 const configs: Record<string, EnvironmentConfig> = {
   development: {
-    apiBaseUrl: 'http://localhost:3000',
+    apiBaseUrl: 'http://localhost:3000/api',
     environment: 'development',
     debug: true,
   },

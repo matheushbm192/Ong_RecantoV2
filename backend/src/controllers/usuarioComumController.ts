@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
-import { Usuario } from '../models/usuarioModel';
-import { UsuarioComum } from '../models/usuarioComumModel';
+import { Usuario, UsuarioPost } from '../models/usuarioModel';
 import { UsuarioComumRN } from '../services/usuarioComumService';
-import { randomUUID } from 'crypto';
 import { MulterRequest } from '../interfaceConfig/MulterRequest';
 
 const usuarioRN = new UsuarioComumRN();
@@ -20,7 +18,6 @@ export class UsuarioComumCTR {
         dataNascimento,
         cpf,
         telefone,
-        redeSocial,
         escolaridade,
         contribuirOng,
         desejaAdotar,
@@ -34,8 +31,7 @@ export class UsuarioComumCTR {
 
       const possuiPet = req.body.possuiPet === 'true';
 
-      const novoUsuario: UsuarioComum = {
-        id_usuario: randomUUID(),
+      const novoUsuario: UsuarioPost = {
         nome,
         sobrenome,
         email,
@@ -43,19 +39,18 @@ export class UsuarioComumCTR {
         dataNascimento,
         cpf,
         telefone,
-        redeSocial,
-        escolaridade,
+        escolaridade: escolaridade || null,
         possuiPet,
-        contribuirOng,
-        desejaAdotar,
+        contribuir_ong: contribuirOng,
+        deseja_adotar: desejaAdotar,
         logradouro,
-        numero,
-        complemento,
+        numero: numero || null,
+        complemento: complemento || null,
         bairro,
-        cidade,
-        estado,
-        created_at: new Date().toISOString(),
-        tipo_usuario: 'comum'
+        cidade: cidade || null,
+        estado: estado || null,
+        criado_em: new Date().toISOString(),
+        tipo_usuario: 'COMUM'
       };
 
       const resultado = await usuarioRN.insertUsuario(novoUsuario);
