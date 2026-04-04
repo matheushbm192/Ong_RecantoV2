@@ -2,145 +2,61 @@ import { atualizarInterfaceUsuario } from "./main";
 import { UsuarioAdministrador } from "./models/usuarioAdministradorModel";
 import { buildApiUrl } from "./utils/api";
 import authService from "./services/authService";
+import { FormValidator } from "./utils/formValidator";
+import { CEPAutocompleter } from "./utils/cepAutocompleter";
+import { PetFieldsManager } from "./utils/petFieldsManager";
+
 atualizarInterfaceUsuario();
+
 document.addEventListener('DOMContentLoaded', () => {
-        const logoutLink = document.querySelector('[data-action="logout"]');
-
-        logoutLink?.addEventListener('click', () => {
-            authService.logout();
-        });
+    const logoutLink = document.querySelector('[data-action="logout"]');
+    logoutLink?.addEventListener('click', () => {
+        authService.logout();
     });
-// Função para aplicar máscara de CEP (00000-000)
-function formatarCEP(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    let value: string = input.value.replace(/\D/g, ''); // Remove tudo que não for dígito
-    if (value.length > 8) {
-        value = value.substring(0, 8);
-    }
-    if (value.length > 5) {
-        value = value.substring(0, 5) + '-' + value.substring(5);
-    }
-    input.value = value;
-}
-(window as any).formatarCEP = formatarCEP;
+});
 
-// Preenchimento automático de endereço pelo CEP
-function inicializarPreenchimentoCep(): void {
-    const cepInput = document.getElementById('cep') as HTMLInputElement | null;
-    if (cepInput) {
-        cepInput.addEventListener('blur', function () {
-            const cep = this.value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then((data: any) => {
-                        if (!data.erro) {
-                            const logradouro = document.getElementById('logradouro') as HTMLInputElement | null;
-                            const bairro = document.getElementById('bairro') as HTMLInputElement | null;
-                            const cidade = document.getElementById('cidade') as HTMLInputElement | null;
-                            const estado = document.getElementById('estado') as HTMLSelectElement | null;
-                            const numero = document.getElementById('numero') as HTMLInputElement | null;
-                            if (logradouro) logradouro.value = data.logradouro || '';
-                            if (bairro) bairro.value = data.bairro || '';
-                            if (cidade) cidade.value = data.localidade || '';
-                            if (estado) estado.value = data.uf || '';
-                            if (numero) numero.focus();
-                        } else {
-                            console.warn('CEP não encontrado ou inválido.');
-                        }
-                    })
-                    .catch((error: unknown) => {
-                        console.error('Erro ao buscar CEP:', error);
-                    });
-            }
-        });
-    }
-}
+// Expor globalmente para compatibilidade com onkeyup
+(window as any).formatarCEP = (event: Event) => CEPAutocompleter.formatCEP(event);
 
-function criarSelectEspecie(index: number): HTMLDivElement {
-    const div = document.createElement('div');
-    div.className = "mb-2";
-    div.innerHTML = `
-        <label for="especiePet${index}" class="block text-sm font-medium text-gray-700 mb-2">
-            Espécie do Pet ${index + 1}:
-        </label>
-        <select id="especiePet${index}" name="especiesPets[]" required
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-            <option value="">Selecione uma espécie</option>
-            <option value="cachorro">Cachorro</option>
-            <option value="gato">Gato</option>
-            <option value="passaro">Pássaro</option>
-            <option value="peixe">Peixe</option>
-            <option value="roedor">Roedor</option>
-            <option value="outro">Outro</option>
-        </select>
-    `;
-    return div;
-}
+// Gerenciador de campos de pets
+const petFieldsManager = new PetFieldsManager(
+    {
+        yesInputId: 'temPetSim',
+        noInputId: 'naoTemPet',
+        quantityInputId: 'quantAnimais',
+        quantityContainerId: 'quantAnimaisDiv',
+        speciesContainerId: 'especiesPetsContainer',
+        speciesSelectorName: 'especiesPets[]',
+    },
+    [
+        { value: '', text: 'Selecione uma espécie' },
+        { value: 'cachorro', text: 'Cachorro' },
+        { value: 'gato', text: 'Gato' },
+        { value: 'passaro', text: 'Pássaro' },
+        { value: 'peixe', text: 'Peixe' },
+        { value: 'roedor', text: 'Roedor' },
+        { value: 'outro', text: 'Outro' },
+    ]
+);
 
-function atualizarSelectsEspecies() {
-    const quantAnimaisInput = document.getElementById('quantAnimais') as HTMLInputElement | null;
-    const especiesPetsContainer = document.getElementById('especiesPetsContainer') as HTMLDivElement | null;
-    if (!quantAnimaisInput || !especiesPetsContainer) return;
-
-    especiesPetsContainer.innerHTML = ""; // Limpa selects antigos
-
-    const quant = parseInt(quantAnimaisInput.value, 10);
-    if (!isNaN(quant) && quant > 0) {
-        for (let i = 0; i < quant; i++) {
-            especiesPetsContainer.appendChild(criarSelectEspecie(i));
-        }
-        especiesPetsContainer.style.display = "block";
-    } else {
-        especiesPetsContainer.style.display = "none";
-    }
-}
-
-function alternarCamposPet() {
-    const temPetSim = document.getElementById('temPetSim') as HTMLInputElement | null;
-    const campoQuantosAnimaisDiv = document.getElementById('quantAnimaisDiv') as HTMLDivElement | null;
-    const especiesPetsContainer = document.getElementById('especiesPetsContainer') as HTMLDivElement | null;
-    if (temPetSim && temPetSim.checked) {
-        if (campoQuantosAnimaisDiv) campoQuantosAnimaisDiv.style.display = 'block';
-        if (especiesPetsContainer) especiesPetsContainer.style.display = 'block';
-        atualizarSelectsEspecies();
-    } else {
-        if (campoQuantosAnimaisDiv) campoQuantosAnimaisDiv.style.display = 'none';
-        if (especiesPetsContainer) {
-            especiesPetsContainer.innerHTML = '';
-            especiesPetsContainer.style.display = 'none';
-        }
-    }
-}
-
-
-
-async function tratarEnvioFormulario(event: Event): Promise<void> {
+/**
+ * Lida com o envio do formulário de cadastro de administrador
+ */
+async function handleFormSubmit(event: Event): Promise<void> {
     event.preventDefault();
-    console.log("Tentativa de envio de formulário");
-
 
     const form = event.target as HTMLFormElement;
     const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
 
-    // Se botão já está desabilitado, evita novo envio
     if (button.disabled) {
-        return; // já está enviando, ignora
+        return;
     }
 
-    // Desabilita o botão para evitar clique múltiplo
     button.disabled = true;
     button.textContent = 'Enviando...';
 
     try {
         const formData = new FormData(form);
-
-        const especiesPets: string[] = [];
-        const selects = document.querySelectorAll('select[name="especiesPets[]"]');
-        selects.forEach((select) => {
-            const value = (select as HTMLSelectElement).value;
-            if (value) especiesPets.push(value);
-        });
 
         const adm: UsuarioAdministrador = {
             tipo_usuario: "ADMINISTRADOR",
@@ -151,28 +67,32 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
             dataNascimento: formData.get('dataNascimento') as string,
             cpf: formData.get('cpf') as string,
             logradouro: formData.get('logradouro') as string,
-            numero: formData.get('numero') as (string | undefined) || undefined,
-            complemento: formData.get('complemento') as (string | undefined) || undefined,
+            numero: (formData.get('numero') as string) || undefined,
+            complemento: (formData.get('complemento') as string) || undefined,
             bairro: formData.get('bairro') as string,
             cidade: formData.get('cidade') as string,
             estado: formData.get('estado') as string,
             telefone: formData.get('telefone') as string,
             escolaridade: formData.get('escolaridade') as string,
-            possuiPet: formData.get('temPet') === 'sim',
+            possuiPet: FormValidator.toBoolean(formData.get('temPet') as string),
             funcao: formData.get('funcao') as string,
-            contribuir_ong: formData.get('contribuirOng') === 'sim',
-            deseja_adotar: formData.get('desejaAdotar') === 'sim',
+            contribuir_ong: FormValidator.toBoolean(formData.get('contribuirOng') as string),
+            deseja_adotar: FormValidator.toBoolean(formData.get('desejaAdotar') as string),
         };
 
-        // Validações básicas
-        if (!adm.nome.trim()) return alert('Preencha o nome.');
-        if (!adm.email.trim()) return alert('Preencha o e-mail.');
-        if (!adm.senha.trim()) return alert('Preencha a senha.');
-        if (!adm.dataNascimento) return alert('Preencha a data de nascimento.');
-        if (!adm.cpf.trim()) return alert('Preencha o CPF.');
-        if (!adm.telefone.trim()) return alert('Preencha o telefone.');
-        //if (!adm.funcao.trim()) return alert('Preencha a função.');
-        
+        // Validações
+        const validationRules = [
+            { field: 'nome', message: 'Preencha o nome.' },
+            { field: 'email', message: 'Preencha o e-mail.' },
+            { field: 'senha', message: 'Preencha a senha.' },
+            { field: 'dataNascimento', message: 'Preencha a data de nascimento.' },
+            { field: 'cpf', message: 'Preencha o CPF.' },
+            { field: 'telefone', message: 'Preencha o telefone.' },
+        ];
+
+        if (!FormValidator.validateRequired(adm, validationRules)) {
+            return;
+        }
 
         console.log("🚀 Enviando requisição para cadastrar administrador");
         console.log("📦 Dados sendo enviados:", JSON.stringify(adm, null, 2));
@@ -181,7 +101,7 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authService.getToken()}`
+                'Authorization': `Bearer ${authService.getToken()}`,
             },
             body: JSON.stringify(adm),
         });
@@ -194,10 +114,10 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
 
         const mensagem = document.getElementById('mensagem-sucesso');
         if (mensagem) {
-          mensagem.classList.remove('hidden');
-          setTimeout(() => {
-            mensagem.classList.add('hidden');
-          }, 2000);
+            mensagem.classList.remove('hidden');
+            setTimeout(() => {
+                mensagem.classList.add('hidden');
+            }, 3000);
         }
 
         form.reset();
@@ -205,21 +125,20 @@ async function tratarEnvioFormulario(event: Event): Promise<void> {
         console.error("Erro ao cadastrar administrador:", error);
         const mensagemErro = document.getElementById('mensagemErro');
         if (mensagemErro) {
-          mensagemErro.classList.remove('hidden');
-          setTimeout(() => {
-            mensagemErro.classList.add('hidden');
-          }, 2000);
+            mensagemErro.classList.remove('hidden');
+            setTimeout(() => {
+                mensagemErro.classList.add('hidden');
+            }, 3000);
         }
-        
-
     } finally {
-        // Reativa botão após fim do envio
         button.disabled = false;
         button.textContent = 'Cadastrar';
     }
 }
 
-
+/**
+ * Inicializa a página de cadastro de administrador
+ */
 export function inicializarCadastroAdm(): void {
     // 🔍 DEBUG: Verifica o token JWT armazenado
     const token = authService.getToken();
@@ -241,24 +160,21 @@ export function inicializarCadastroAdm(): void {
 
     const form = document.getElementById('userForm') as HTMLFormElement;
     if (form) {
-        form.addEventListener('submit', tratarEnvioFormulario);
+        form.addEventListener('submit', handleFormSubmit);
     }
 
-    const temPetSim = document.getElementById('temPetSim') as HTMLInputElement | null;
-    const temPetNao = document.getElementById('naoTemPet') as HTMLInputElement | null;
-    const quantAnimaisInput = document.getElementById('quantAnimais') as HTMLInputElement | null;
-    if (temPetSim && temPetNao) {
-        temPetSim.addEventListener('change', alternarCamposPet);
-        temPetNao.addEventListener('change', alternarCamposPet);
-    }
-    if (quantAnimaisInput) {
-        quantAnimaisInput.addEventListener('input', atualizarSelectsEspecies);
-    }
-    alternarCamposPet();
-    inicializarPreenchimentoCep();
+    petFieldsManager.initialize();
+
+    CEPAutocompleter.initialize('cep', {
+        logradouroId: 'logradouro',
+        bairroId: 'bairro',
+        cidadeId: 'cidade',
+        estadoId: 'estado',
+        numeroId: 'numero',
+    });
 }
 
-export function initializeCadastroAdm() {
+export function initializeCadastroAdm(): void {
     inicializarCadastroAdm();
 }
 

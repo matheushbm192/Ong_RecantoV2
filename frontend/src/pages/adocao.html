@@ -106,6 +106,11 @@
             <aside class="md:col-span-1 p-4 border border-gray-300 rounded bg-white shadow order-1 md:order-none">
                 <h2 class="text-xl font-semibold mb-4 text-[#1f2a5a]">Filtrar Animais</h2>
 
+                <label for="filtro-especie" class="block font-semibold mb-1">Espécie:</label>
+                <select id="filtro-especie" class="w-full mb-4 border rounded px-2 py-1">
+                    <option value="">Todas</option>
+                </select>
+
                 <label for="filtro-raca" class="block font-semibold mb-1">Raça:</label>
                 <select id="filtro-raca" class="w-full mb-4 border rounded px-2 py-1">
                     <option value="">Todas</option>
@@ -114,17 +119,11 @@
                 <label for="filtro-sexo" class="block font-semibold mb-1">Sexo:</label>
                 <select id="filtro-sexo" class="w-full mb-4 border rounded px-2 py-1">
                     <option value="">Todos</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
                 </select>
 
                 <label for="filtro-idade" class="block font-semibold mb-1">Idade:</label>
                 <select id="filtro-idade" class="w-full mb-4 border rounded px-2 py-1">
                     <option value="">Todas</option>
-                    <option value="0-1">Até 1 ano</option>
-                    <option value="2-3">2 a 3 anos</option>
-                    <option value="4-6">4 a 6 anos</option>
-                    <option value="7+">7 anos ou mais</option>
                 </select>
 
                 <button id="btn-clear-filters"

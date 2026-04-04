@@ -30,15 +30,22 @@ export class PetCTR {
 
   async getAllPets(req: Request, res: Response) {
     try {
-
+      console.log("🐾 [CONTROLLER - getAllPets] Requisição recebida");
       const pets = await petRN.selectAllPets();
 
-      console.log("Pets encontrados:", pets);
+      console.log(`✅ [CONTROLLER - getAllPets] ${pets.length} pets retornados`);
+      pets.forEach((pet, index) => {
+        console.log(`   Pet ${index + 1}: ${pet.nome} - Fotos: ${pet.fotos?.length || 0}`);
+        if (pet.fotos && pet.fotos.length > 0) {
+          pet.fotos.forEach((foto) => {
+            console.log(`      📸 ${foto.foto_url}`);
+          });
+        }
+      });
       res.json({ pets });
 
     } catch (error: any) {
-
-      console.error("Erro ao buscar animais:", error);
+      console.error("❌ Erro ao buscar animais:", error);
       res.status(500).json({ error: error.message });
     }
   }
@@ -55,7 +62,6 @@ export class PetCTR {
         especie,
         sexo,
         idade,
-        cep,
         logradouro,
         numero,
         complemento,
@@ -70,7 +76,6 @@ export class PetCTR {
         especie,
         sexo,
         idade,
-        cep,
         logradouro,
         numero,
         complemento,
@@ -79,7 +84,7 @@ export class PetCTR {
         estado
       });
 
-      const fotoUrl = req.file ? `/uploads/${req.file.filename + Date.now().toString()}` : null;
+      const fotoUrl = req.file ? `/uploads/${req.file.filename}` : null;
       console.log("Foto URL:", fotoUrl);
 
 
@@ -89,7 +94,6 @@ export class PetCTR {
         especie: especie || null,
         sexo,
         idade: idade ? parseInt(idade, 10) : null,
-        cep: cep || null,
         logradouro,
         numero: numero || null,
         complemento: complemento || null,

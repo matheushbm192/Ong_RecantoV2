@@ -14,16 +14,19 @@ let filtroIdade: HTMLSelectElement;
 let itemsPerPage = 12;
 let currentPage = 1;
 let allPets: Pet[] = []; // pets carregados da API
+let filtroEspecie: HTMLSelectElement;
 
 function getFilteredPets(): Pet[] {
   const raca = filtroRaca.value;
   const sexo = filtroSexo.value;
   const idade = filtroIdade.value;
+  const especie = filtroEspecie.value;
 
   return allPets.filter(pet =>
     (raca === "" || pet.raca === raca) &&
     (sexo === "" || pet.sexo === sexo) &&
-    (idade === "" || String(pet.idade) === idade)
+    (idade === "" || String(pet.idade) === idade) &&
+    (especie === "" || pet.especie === especie)
   );
 }
 atualizarInterfaceUsuario();
@@ -39,6 +42,18 @@ function popularFiltros(pets: Pet[]): void {
   filtroRaca.innerHTML = "<option value=''>Todas</option>";
   filtroSexo.innerHTML = "<option value=''>Todos</option>";
   filtroIdade.innerHTML = "<option value=''>Todas</option>";
+  filtroEspecie.innerHTML = "<option value=''>Todas</option>";
+
+  // Espécies únicas
+  const especiesUnicas = [...new Set(pets.map(pet => pet.especie).filter(e => e))];
+  especiesUnicas.forEach(especie => {
+    if (especie) {
+      const option = document.createElement("option");
+      option.value = especie;
+      option.textContent = especie;
+      filtroEspecie.appendChild(option);
+    }
+  });
 
   // Raças únicas
   const racasUnicas = [...new Set(pets.map(pet => pet.raca))];
@@ -51,12 +66,12 @@ function popularFiltros(pets: Pet[]): void {
     }
   });
 
-  // Sexos únicos
+  // Sexos únicos (M/F)
   const sexosUnicos = [...new Set(pets.map(pet => pet.sexo))];
   sexosUnicos.forEach(sexo => {
     const option = document.createElement("option");
     option.value = sexo;
-    option.textContent = sexo;
+    option.textContent = sexo === "M" ? "Macho" : sexo === "F" ? "Fêmea" : sexo;
     filtroSexo.appendChild(option);
   });
 
@@ -83,14 +98,20 @@ export async function renderPage(page: number = 1): Promise<void> {
   pageItems.forEach((pet) => {
     const li = document.createElement("li");
     li.className = "bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition-shadow duration-300";
+    // buildApiUrl() automaticamente ajusta para desenvolvimento (localhost) ou produção
+    const fotoUrl = pet.fotos && pet.fotos.length > 0 
+      ? buildApiUrl(pet.fotos[0].foto_url) 
+      : "https://via.placeholder.com/300x200.png?text=Sem+Foto";
     li.innerHTML = `
-      <img src="${buildApiUrl(pet.fotos![0].foto_url)}" alt="${pet.nome}" class="w-full h-48 object-cover" />
+      <img src="${fotoUrl}" alt="${pet.nome}" class="w-full h-48 object-cover" />
       <div class="p-4 flex flex-col flex-grow">
         <h2 class="text-xl font-semibold mb-2 text-[#357a38]">${pet.nome}</h2>
         <ul class="text-gray-700 flex-grow space-y-1">
-          <li><strong>Raça:</strong> ${pet.raca}</li>
-          <li><strong>Sexo:</strong> ${pet.sexo}</li>
-          <li><strong>Idade:</strong> ${pet.idade}</li>
+          <li><strong>Espécie:</strong> ${pet.especie || "N/A"}</li>
+          <li><strong>Raça:</strong> ${pet.raca || "N/A"}</li>
+          <li><strong>Sexo:</strong> ${pet.sexo === "M" ? "Macho" : pet.sexo === "F" ? "Fêmea" : pet.sexo}</li>
+          <li><strong>Idade:</strong> ${pet.idade} ano(s)</li>
+          ${pet.bairro && pet.cidade ? `<li><strong>Local:</strong> ${pet.bairro}, ${pet.cidade}</li>` : ""}
         </ul>
 
         <button class="adotar-btn mt-4 bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 transition" 
@@ -133,9 +154,10 @@ pageInfo = document.getElementById("page-info") as HTMLSpanElement;
 filtroRaca = document.getElementById("filtro-raca") as HTMLSelectElement;
 filtroSexo = document.getElementById("filtro-sexo") as HTMLSelectElement;
 filtroIdade = document.getElementById("filtro-idade") as HTMLSelectElement;
+filtroEspecie = document.getElementById("filtro-especie") as HTMLSelectElement;
 
 // Verifica se os elementos existem
-if (!petList || !prevBtn || !nextBtn || !pageInfo || !filtroRaca || !filtroSexo || !filtroIdade) {
+if (!petList || !prevBtn || !nextBtn || !pageInfo || !filtroRaca || !filtroSexo || !filtroIdade || !filtroEspecie) {
   console.error("Elementos da página de adoção não encontrados");
 }
 
@@ -145,7 +167,7 @@ popularFiltros(allPets);
 renderPage(1);
 
 // Adiciona event listeners
-[filtroRaca, filtroSexo, filtroIdade].forEach(filtro => {
+[filtroRaca, filtroSexo, filtroIdade, filtroEspecie].forEach(filtro => {
   filtro.addEventListener("change", () => renderPage(1));
 });
 
@@ -166,6 +188,18 @@ nextBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
+
+// Limpar filtros
+const btnClearFilters = document.getElementById("btn-clear-filters") as HTMLButtonElement;
+if (btnClearFilters) {
+  btnClearFilters.addEventListener("click", () => {
+    filtroRaca.value = "";
+    filtroSexo.value = "";
+    filtroIdade.value = "";
+    filtroEspecie.value = "";
+    renderPage(1);
+  });
+}
 
 
 //TODO: completar a função de solicitação de adoção

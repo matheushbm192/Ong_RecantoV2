@@ -60,12 +60,12 @@ export class PetRN {
 
   async selectAllPets(): Promise<Pet[]> {
     try {
-      console.log("=== PETRN - CHAMANDO DAO ===");
+      console.log("🔄 [SERVICE - selectAllPets] Chamando DAO...");
       const resultados = await this.petDao.selectPets();
-      console.log("=== PETRN - PETS SELECIONADOS COM SUCESSO ===");
+      console.log(`✅ [SERVICE - selectAllPets] ${resultados.length} pets retornados do DAO`);
       return resultados;
     } catch (error) {
-      console.error("=== PETRN - ERRO NO DAO ===");
+      console.error("❌ [SERVICE - selectAllPets] Erro no DAO");
       console.error("Erro capturado na PetRN:", error);
       throw error;
     }

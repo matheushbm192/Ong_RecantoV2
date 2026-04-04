@@ -35,7 +35,8 @@ setupBodyParser(app);
 // Log após body parser
 app.use((req, res, next) => {
     console.log('✅ [APÓS BODY PARSER] req.body está disponível');
-    console.log(`📦 Body:', ${JSON.stringify(req.body).substring(0, 100)}...`);
+    const bodyStr = req.body ? JSON.stringify(req.body).substring(0, 100) : 'undefined';
+    console.log(`📦 Body: ${bodyStr}...`);
     next();
 });
 

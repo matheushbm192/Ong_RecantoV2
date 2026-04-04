@@ -119,6 +119,12 @@
                     <input id="raca" name="raca" type="text" placeholder="Raça do animal" required
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="especie">
+                        Espécie<span style="color: red;">*</span></label>
+                    <input id="especie" name="especie" type="text" placeholder="Cachorro, Gato, etc." required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
                 <div class="mb-6">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="foto">Foto do Animal</label>
                     <input id="foto" name="foto" type="file" accept="image/*" required
@@ -224,8 +230,8 @@
                     <select id="sexo" name="sexo" required
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         <option value="" disabled selected>Selecione o sexo</option>
-                        <option value="Macho">Macho</option>
-                        <option value="Fêmea">Fêmea</option>
+                        <option value="M">Macho</option>
+                        <option value="F">Fêmea</option>
                     </select>
                 </div>
 

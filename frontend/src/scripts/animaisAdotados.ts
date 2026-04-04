@@ -40,7 +40,7 @@ export async function InitializeAnimaisAdotadosPage() {
     lista.innerHTML = animaisAdotados.map((animal : any) => `
       <div id="card-${animal.id_pet}" class="flex flex-col bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition cursor-pointer group max-w-xl mx-auto mb-4">
         <div class="flex items-center justify-start gap-4">
-          <img src="${buildApiUrl(animal.foto_url) || 'https://via.placeholder.com/80x80.png?text=Animal'}"
+          <img src="${animal.foto_url ? buildApiUrl(animal.foto_url) : 'https://via.placeholder.com/80x80.png?text=Animal'}"
                alt="Imagem do animal"
                class="h-20 w-24 object-cover rounded bg-gray-100 border group-hover:scale-105 transition-transform" />
           <div class="flex-1 flex flex-col md:flex-row md:items-center gap-8">
