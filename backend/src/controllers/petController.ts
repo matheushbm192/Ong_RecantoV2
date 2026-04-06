@@ -7,6 +7,26 @@ import { PetRN } from '../services/petService';
 const petRN = new PetRN();
 
 export class PetCTR {
+  /**
+   * Retorna todos os animais adotados (pets com id_usuario preenchido)
+   */
+  async getAllAnimaisAdotados(req: Request, res: Response) {
+    try {
+      console.log("🐾 [CONTROLLER - getAllAnimaisAdotados] Requisição recebida");
+      const pets = await petRN.selectAllPets();
+
+      // Filtrar apenas os pets que foram adotados (têm id_usuario)
+      const animaisAdotados = pets.filter(pet => pet.id_usuario !== null && pet.id_usuario !== undefined);
+
+      console.log(`✅ [CONTROLLER - getAllAnimaisAdotados] ${animaisAdotados.length} animais adotados retornados`);
+      res.status(200).json(animaisAdotados);
+
+    } catch (error: any) {
+      console.error("❌ Erro ao buscar animais adotados:", error);
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   async getAnimaisAdotadosPorUsuarioId(req: Request, res: Response) {
     try {
 

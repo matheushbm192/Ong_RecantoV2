@@ -7,26 +7,26 @@ const solicitacaoAdocaoController = new SolicitacaoAdocaoController();
 const router = Router();
 
 
-router.post('/',
-    autenticarToken,
-    solicitacaoAdocaoController.postSolicitacaoAdocao
-);
+// router.post('/',
+//     autenticarToken,
+//     solicitacaoAdocaoController.postSolicitacaoAdocao
+// );
 
 router.get('/',
     autenticarToken,
-    autorizarTipoUsuario("ADIMINISTRADOR","VOLUNTARIO"),
+    autorizarTipoUsuario("ADMINISTRADOR","VOLUNTARIO"),
     solicitacaoAdocaoController.getAllSolicitacoesAdocaesPendentes
 );
 
 router.post('/aprovar',
     autenticarToken,
-    autorizarTipoUsuario("ADIMINISTRADOR","VOLUNTARIO"),
+    autorizarTipoUsuario("ADMINISTRADOR","VOLUNTARIO"),
     solicitacaoAdocaoController.postAprovarSolicitacaoAdocao
 );
 
 router.post('/reprovar',
     autenticarToken,
-    autorizarTipoUsuario("ADIMINISTRADOR","VOLUNTARIO"),
+    autorizarTipoUsuario("ADMINISTRADOR","VOLUNTARIO"),
     solicitacaoAdocaoController.postReprovarSolicitacaoAdocao
 );
 

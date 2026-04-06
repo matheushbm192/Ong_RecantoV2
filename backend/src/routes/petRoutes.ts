@@ -10,6 +10,11 @@ const router = Router()
 router.get('/',
   petCTR.getAllPets
 );
+
+router.get('/adotados/todos',
+  petCTR.getAllAnimaisAdotados
+);
+
 router.post('/animais-adotados-por-usuario',
     autenticarToken,
     petCTR.getAnimaisAdotadosPorUsuarioId

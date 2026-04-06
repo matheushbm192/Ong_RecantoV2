@@ -63,21 +63,24 @@ let ordenarSelect: HTMLSelectElement | null = null;
 let hasListenersBeenInitialized = false; // Flag para evitar inicialização duplicada
 
 // --- FUNÇÃO PARA MAPEAR PedidoAdocaoCompleto PARA SolicitacaoAdocao ---
-function mapPedidoToSolicitacao(pedido: PedidoAdocaoCompleto, novoResultado: "Aprovado" | "Reprovado"): SolicitacaoAdocao {
+function mapPedidoToSolicitacao(pedido: PedidoAdocaoCompleto, acao: "aceitar" | "recusar"): any {
     return {
-        id: pedido.idPedido as any, // UUID
-        id_pet: pedido.animal.id_pet as any, // UUID
-        id_usuario: pedido.adotante.idUsuario as any, // UUID
+        id_solicitacao: Number(pedido.idPedido), // ID da solicitação
+        id_pet: Number(pedido.animal.id_pet),
+        id_usuario: Number(pedido.adotante.idUsuario),
         id_administrador: null, 
-        status: "APROVADA",
+        status: acao === "aceitar" ? "APROVADA" : "REPROVADA",
     };
 }
 
 // --- FUNÇÃO PARA ENVIAR REQUISIÇÃO DE APROVAÇÃO/REJEIÇÃO ---
-async function enviarRequisicaoAprovacao(solicitacao: SolicitacaoAdocao): Promise<boolean> {
+async function enviarRequisicaoAprovacao(solicitacao: SolicitacaoAdocao, acao: "aceitar" | "recusar"): Promise<boolean> {
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(buildApiUrl('/pedidos-adocao/aprovar'), {
+        // Determinar o endpoint baseado na ação
+        const endpoint = acao === "aceitar" ? '/pedidos-adocao/aprovar' : '/pedidos-adocao/reprovar';
+        
+        const response = await fetch(buildApiUrl(endpoint), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +91,7 @@ async function enviarRequisicaoAprovacao(solicitacao: SolicitacaoAdocao): Promis
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Erro ao processar solicitação');
+            throw new Error(errorData.message || errorData.erro || 'Erro ao processar solicitação');
         }
 
         const result = await response.json();
@@ -326,13 +329,13 @@ async function handleActionButtons(event: Event): Promise<void> {
                 return;
             }
 
-            // 🆕 NOVA IMPLEMENTAÇÃO: Enviar requisição para o endpoint de aprovação
-            const solicitacaoData = mapPedidoToSolicitacao(pedidoToUpdate, novoResultado as "Aprovado" | "Reprovado");
+            // 🆕 NOVA IMPLEMENTAÇÃO: Enviar requisição para o endpoint correto
+            const solicitacaoData = mapPedidoToSolicitacao(pedidoToUpdate, action as "aceitar" | "recusar");
             
-            console.log('Enviando dados para aprovação:', solicitacaoData);
+            console.log('Enviando dados para', action === 'aceitar' ? 'aprovação' : 'reprovação:', solicitacaoData);
             
-            // Enviar para o endpoint de aprovação
-            await enviarRequisicaoAprovacao(solicitacaoData);
+            // Enviar para o endpoint correto (aprovar ou reprovar)
+            await enviarRequisicaoAprovacao(solicitacaoData, action as "aceitar" | "recusar");
 
             // ✅ Atualizar o estado local para refletir as mudanças
             pedidoToUpdate.status = 'Concluido';
@@ -521,3 +524,9 @@ export function initializePedidosAdocaoPageListeners(): void {
     // Inicia o carregamento dos dados após a inicialização dos listeners
     fetchAllPedidosAdocao();
 }
+
+// 🚀 Inicializar automaticamente quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('📋 Página de pedidos carregada - inicializando...');
+    initializePedidosAdocaoPageListeners();
+});

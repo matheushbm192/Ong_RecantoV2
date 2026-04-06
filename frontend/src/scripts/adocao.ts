@@ -204,51 +204,183 @@ if (btnClearFilters) {
 
 //TODO: completar a função de solicitação de adoção
 
+/**
+ * Cria um popup customizado com mensagem e botão de ação
+ */
+function mostrarPopupErro(titulo: string, mensagem: string, nomeBotao: string = "Ir para Login", callback?: () => void) {
+  // Criar overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+  
+  // Criar modal
+  const modal = document.createElement('div');
+  modal.className = 'bg-white rounded-lg shadow-2xl p-8 max-w-md w-full mx-4';
+  modal.innerHTML = `
+    <div class="text-center">
+      <div class="mb-4">
+        <i class="fas fa-exclamation-circle text-red-500 text-5xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-[#1f2a5a] mb-3">${titulo}</h2>
+      <p class="text-gray-700 mb-6">${mensagem}</p>
+      <div class="flex gap-3">
+        <button class="btn-cancelar flex-1 bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded transition">
+          Cancelar
+        </button>
+        ${callback ? `<button class="btn-acao flex-1 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 px-4 rounded transition">
+          ${nomeBotao}
+        </button>` : ''}
+      </div>
+    </div>
+  `;
+  
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  
+  // Event listeners
+  const btnCancelar = modal.querySelector('.btn-cancelar') as HTMLButtonElement;
+  const btnAcao = modal.querySelector('.btn-acao') as HTMLButtonElement;
+  
+  btnCancelar.addEventListener('click', () => {
+    overlay.remove();
+  });
+  
+  if (btnAcao && callback) {
+    btnAcao.addEventListener('click', () => {
+      overlay.remove();
+      callback();
+    });
+  }
+}
+
 async function solicitarAdocao(petId: string) {
   const token = localStorage.getItem("token");
 
-  //PEGAR O ID DO USUARIO QUE CLICOU PELO TOKEN NO BACKEND
+  // Verificar se usuário está autenticado
   if (!token) {
-    alert("Usuário não autenticado. Por favor, faça login para solicitar a adoção.");
+    mostrarPopupErro(
+      "Autenticação Necessária",
+      "Para solicitar a adoção de um animal, você precisa estar logado.",
+      "Ir para Login",
+      () => {
+        window.location.href = './login.html';
+      }
+    );
     return;
   }
 
+  // Obter dados do usuário atual usando authService
+  const user = authService.getCurrentUser();
+  if (!user) {
+    mostrarPopupErro(
+      "Sessão Expirada",
+      "Sua sessão expirou. Por favor, faça login novamente.",
+      "Ir para Login",
+      () => {
+        authService.logout();
+        window.location.href = './login.html';
+      }
+    );
+    return;
+  }
+
+  const { id_usuario } = user;
+  console.log("👤 Usuário autenticado:", user);
   
-  // const user = getUserFromToken();
-  // if (!user) {
-  //   alert("Usuário não autenticado");
-  //   return;
-  // }
+  const usuarioPetObj = {
+    id_usuario: id_usuario,
+    id_pet: petId
+  };
 
-  // const { id_usuario } = user;
-  // console.log("USEEEER", user)
-  // const usuarioPetObj = {
-  //   id_usuario: id_usuario,
-  //   id_pet: petId
-  // };
+  console.log("📝 Dados da solicitação:", usuarioPetObj);
 
-  // console.log("USUARIO PET OBJ", usuarioPetObj)
+  try {
+    // Usar buildApiUrl() para construir a URL corretamente em qualquer ambiente
+    const url = buildApiUrl('/solicitar-adocao');
+    
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(usuarioPetObj)
+    });
 
-  // try {
-  //   const response = await fetch('http://localhost:3000/solicitar-adocao/', {
-  //     method: "POST",
-  //     headers: {
-  //       'Authorization': `Bearer ${token}`,
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(usuarioPetObj)
-  //   });
+    if (!response.ok) {
+      let mensagemErro = "Erro ao solicitar adoção";
+      let titulo = "Erro na Requisição";
+      let botaoCallback: (() => void) | null = () => {
+        window.location.href = './login.html';
+      };
+      
+      try {
+        const errorData = await response.json();
+        mensagemErro = errorData.erro || mensagemErro;
+      } catch {
+        // Se não conseguir parsear JSON, tenta obter texto simples
+        const errorText = await response.text();
+        if (errorText) {
+          mensagemErro = errorText;
+        }
+      }
 
-  //   if (!response.ok) {
-  //     const errorText = await response.text();
-  //     throw new Error(errorText || "Erro ao solicitar adoção");
-  //   }
+      // Se for erro 409 (solicitação duplicada), não redirecionar para login
+      if (response.status === 409) {
+        titulo = "Solicitação Duplicada";
+        botaoCallback = null; // Apenas botão de cancelar (sem ação)
+      }
 
-  //   const resultado = await response.json();
-  //   alert("Solicitação de adoção enviada com sucesso!");
-  //   console.log("Resposta do servidor:", resultado);
-  // } catch (error) {
-  //   console.error("Erro ao solicitar adoção:", error);
-  //   alert("Erro ao solicitar adoção.");
-  // }
+      throw { message: mensagemErro, titulo, botaoCallback };
+    }
+
+    const resultado = await response.json();
+    
+    // Sucesso - mostrar popup positivo
+    const overlay = document.createElement('div');
+    overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    
+    const modal = document.createElement('div');
+    modal.className = 'bg-white rounded-lg shadow-2xl p-8 max-w-md w-full mx-4';
+    modal.innerHTML = `
+      <div class="text-center">
+        <div class="mb-4">
+          <i class="fas fa-check-circle text-green-500 text-5xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-[#1f2a5a] mb-3">Sucesso!</h2>
+        <p class="text-gray-700 mb-6">Sua solicitação de adoção foi enviada com sucesso! Em breve você receberá notícias.</p>
+        <button class="btn-ok w-full bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 px-4 rounded transition">
+          OK
+        </button>
+      </div>
+    `;
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    (modal.querySelector('.btn-ok') as HTMLButtonElement).addEventListener('click', () => {
+      overlay.remove();
+      console.log("✅ Resposta do servidor:", resultado);
+    });
+    
+  } catch (error: any) {
+    console.error("❌ Erro ao solicitar adoção:", error);
+    
+    // Extrair informações do erro customizado ou usar valores padrão
+    const titulo = error.titulo || "Erro na Requisição";
+    const mensagem = error.message || (error instanceof Error ? error.message : 'Tente novamente mais tarde.');
+    
+    // Se botaoCallback for null, não mostrar botão de ação
+    const callback = error.botaoCallback === null 
+      ? undefined 
+      : (error.botaoCallback || (() => {
+          window.location.href = './login.html';
+        }));
+    
+    mostrarPopupErro(
+      titulo,
+      mensagem,
+      "Ir para Login",
+      callback
+    );
+  }
 }

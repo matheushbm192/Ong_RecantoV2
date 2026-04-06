@@ -69,6 +69,21 @@ export class SolicitacaoAdocaoRN {
         }
 
         try {
+            // 👀 Verificar se já existe uma solicitação ativa para este usuário e animal
+            const solicitacaoExistente = await this.solicitacaoAdocaoDAO.checkSolicitacaoExistente(id_usuario, id_pet);
+            
+            if (solicitacaoExistente) {
+                let mensagem = "";
+                if (solicitacaoExistente.status === 'PENDENTE') {
+                    mensagem = "Você já possui uma solicitação PENDENTE para este animal. Aguarde a resposta do administrador.";
+                } else if (solicitacaoExistente.status === 'APROVADA') {
+                    mensagem = "Esta adoção já foi APROVADA! O animal já está em seu nome.";
+                }
+                
+                console.log(`⚠️ [RN - insertSolicitacaoAdocao] ${mensagem}`);
+                throw new Error(mensagem);
+            }
+
             const resultado = await this.solicitacaoAdocaoDAO.insertSolicitarAdocao(id_usuario, id_pet);
             console.log("=== ADOCAO INSERIDA COM SUCESSO ===");
             return resultado;
