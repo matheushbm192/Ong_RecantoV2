@@ -46,7 +46,7 @@ export function atualizarInterfaceUsuario() {
 
     const permissoes: Record<string, MenuKey[]> = {
         DESLOGADO: ["home", "adocao", "cadastroUsuario", "login"],
-        COMUM: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "logout"],
+        COMUM: ["home", "adocao", "animaisAdotados", "logout"],
         VOLUNTARIO: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "pedidosAdocao", "logout"],
         ADMINISTRADOR: ["home", "adocao", "cadastroUsuario", "animaisAdotados", "cadastroAnimal", "cadastroVoluntario", "cadastroAdministrador", "pedidosAdocao", "logout"]
     };
