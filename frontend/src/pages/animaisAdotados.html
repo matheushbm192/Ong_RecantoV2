@@ -110,15 +110,19 @@
                     <h1 class="text-3xl font-bold mb-8 text-[#27387f] text-center">Animais Adotados</h1>
                     <div class="flex justify-end mb-6">
                         <label for="sort" class="self-center mr-2 text-[#27387f] font-medium">Ordenar por:</label>
-                        <select id="sort" class="border border-gray-300 p-2 rounded">
+                        <select id="sort" class="border border-gray-300 p-2 rounded text-sm">
                             <option value="recentes">Mais recentes</option>
                             <option value="antigos">Mais antigos</option>
                         </select>
                     </div>
                     <div id="adotados-list" class="space-y-8">
+                        <p class="text-center text-gray-500">Carregando animais adotados...</p>
                     </div>
 
-                </div>
+                    <!-- Informação de paginação -->
+                    <div class="flex justify-center mt-8">
+                        <p id="pagination-info" class="text-sm text-gray-600">Página 1 de 1</p>
+                    </div>
         </section>
     </main>
     <footer class="bg-[#1f2a5a] text-yellow-400 py-6 text-center text-xs">

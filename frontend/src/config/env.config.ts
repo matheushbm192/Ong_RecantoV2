@@ -9,18 +9,21 @@ interface EnvironmentConfig {
   debug: boolean;
 }
 
+// URLs configuradas via webpack DefinePlugin a partir dos arquivos .env
 const configs: Record<string, EnvironmentConfig> = {
   development: {
-    apiBaseUrl: 'http://localhost:3000',
+    apiBaseUrl: 'http://localhost:3000/api',
     environment: 'development',
     debug: true,
   },
   staging: {
+    // ✅ Injetado pelo webpack a partir de .env.staging
     apiBaseUrl: process.env.REACT_APP_API_URL_STAGING || 'https://api-staging.suaong.com.br',
     environment: 'staging',
     debug: true,
   },
   production: {
+    // ✅ Injetado pelo webpack a partir de .env.production
     apiBaseUrl: process.env.REACT_APP_API_URL_PRODUCTION || 'https://api.suaong.com.br',
     environment: 'production',
     debug: false,
@@ -28,11 +31,13 @@ const configs: Record<string, EnvironmentConfig> = {
 };
 
 /**
- * Detecta o ambiente baseado em variáveis de ambiente
+ * Detecta o ambiente baseado em NODE_ENV injetado pelo webpack
  */
 function getEnvironment(): string {
-  // Verifique a variável de ambiente NODE_ENV
+  // ✅ process.env.NODE_ENV é injetado pelo webpack.DefinePlugin
   const env = process.env.NODE_ENV;
+
+  console.log(`🔧 [ENV CONFIG] Environment detectado: ${env}`);
 
   if (env === 'production') {
     return 'production';
@@ -55,7 +60,7 @@ export function getConfig(): EnvironmentConfig {
 
   if (!config) {
     console.warn(
-      `Ambiente "${environment}" não encontrado. Usando configuração padrão (development)`
+      ` Ambiente "${environment}" não encontrado. Usando configuração padrão (development)`
     );
     return configs.development;
   }

@@ -106,17 +106,23 @@
 
                 <label for="filtro-adotante" class="block font-semibold mb-1">Adotante:</label>
                 <select id="filtro-adotante" class="w-full mb-4 border rounded px-2 py-1">
-                    <option value="">Todas</option>
+                    <option value="">Todos</option>
                 </select>
 
                 <label for="animal" class="block font-semibold mb-1">Animal:</label>
                 <select id="animal" class="w-full mb-4 border rounded px-2 py-1">
-                    <option value="">Todas</option>
+                    <option value="">Todos</option>
                 </select>
 
                 <label for="filtro-status" class="block font-semibold mb-1">Status:</label>
                 <select id="filtro-status" class="w-full mb-4 border rounded px-2 py-1">
                     <option value="">Todos</option>
+                </select>
+
+                <label for="ordenar-por" class="block font-semibold mb-1">Ordenar por:</label>
+                <select id="ordenar-por" class="w-full mb-4 border rounded px-2 py-1">
+                    <option value="dataSolicitacao_desc">Mais Recentes</option>
+                    <option value="dataSolicitacao_asc">Mais Antigos</option>
                 </select>
 
                 <button id="btn-clear-filters"
@@ -126,7 +132,22 @@
             </aside>
             <div class="md:col-span-3 order-0 md:order-1">
                 <h1 class="text-4xl font-bold mb-8">Pedidos de Adoção</h1>
-                <!-- Conteúdo dos pedidos aqui -->
+                
+                <!-- Lista de pedidos -->
+                <ul id="pedidosAdocao-list" class="space-y-6">
+                    <li class="text-center text-gray-500 p-8">Carregando pedidos...</li>
+                </ul>
+
+                <!-- Controles de paginação -->
+                <div class="flex items-center justify-between mt-8">
+                    <button id="prev-btn" class="bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        ← Anterior
+                    </button>
+                    <span id="page-info" class="font-semibold text-[#1f2a5a]">Página 1 de 1</span>
+                    <button id="next-btn" class="bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        Próximo →
+                    </button>
+                </div>
             </div>
         </section>
     </main>

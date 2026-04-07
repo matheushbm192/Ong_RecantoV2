@@ -13,6 +13,7 @@ router.use('/pets', petRoutes);
 router.use('/login', loginRoutes);
 router.use('/usuarios', usuarioRoutes);
 router.use('/solicitar-adocao', solicitacaoAdocaoRoutes);
+router.use('/pedidos-adocao', solicitacaoAdocaoRoutes); // 📋 Alias para pedidos de adoção
 
 
 // Rota padrão da API

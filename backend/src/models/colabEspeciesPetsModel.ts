@@ -1,5 +1,7 @@
 export interface colabEspeciesPet{
     id: number;
-    id_campanha: number;
-    id_voluntario: number;
+    id_coaborador: number;
+    especie: string;
+    sexo: string;
+   
 }

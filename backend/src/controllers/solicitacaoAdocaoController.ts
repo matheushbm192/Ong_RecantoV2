@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SolicitacaoAdocaoRN } from "../services/solicitacaoAdocaoService";
+import { mapSolicitacaoToPedidoCompleto } from "../models/pedidoAdocaoCompletoModel";
 
 const solicitacaoAdocaoRN = new SolicitacaoAdocaoRN();
 
@@ -9,7 +10,12 @@ export class SolicitacaoAdocaoController {
         try {
             const solicitacoes = await solicitacaoAdocaoRN.getAllSolicitacoesPendentes();
             
-            res.status(200).json({ dados: solicitacoes });
+            // Mapear para o formato esperado pelo frontend usando a função helper
+            const pedidosMapeados = solicitacoes.map(sol => 
+                mapSolicitacaoToPedidoCompleto(sol, sol.usuario!, sol.pet!)
+            );
+            
+            res.status(200).json(pedidosMapeados);
         } catch (error: any) {
             console.error("=== ERRO CAPTURADO NO CONTROLLER ===");
             console.error("Erro completo:", error);
@@ -29,6 +35,15 @@ export class SolicitacaoAdocaoController {
         } catch (error: any) {
             console.error("=== ERRO CAPTURADO NO CONTROLLER ===");
             console.error("Erro completo:", error);
+            
+            // 🔴 Se for erro de solicitação duplicada retornar 409 Conflict
+            if (error.message.includes('PENDENTE') || 
+                error.message.includes('APROVADA') || 
+                error.message.includes('já existe') ||
+                error.message.includes('já possui')) {
+                return res.status(409).json({ erro: error.message });
+            }
+            
             res.status(500).json({ erro: error.message || "Erro interno no servidor" });
            
         }

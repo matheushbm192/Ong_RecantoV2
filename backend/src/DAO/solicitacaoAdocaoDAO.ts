@@ -66,11 +66,38 @@ export class SolicitacaoAdocaoDAO {
         try {
             await sql`
                 UPDATE solicitacao_adocao
-                id_administrador = ${id_administrador}, status = 'REPROVADA'
-                WHERE id_solicitacao = ${id_solicitacao}
+                SET id_administrador = ${id_administrador}, status = 'REPROVADA'
+                WHERE id = ${id_solicitacao}
             `;
+            console.log(`✅ [DAO] Solicitação ${id_solicitacao} reprovada com sucesso`);
         } catch (error) {
             console.error("Erro ao rejeitar solicitação de adoção:", error);
+            throw error;
+        }
+    }
+
+    /**
+     * Verifica se existe uma solicitação ativa (não reprovada) para o mesmo usuário e animal
+     * @returns Retorna a solicitação se existir, null caso contrário
+     */
+    async checkSolicitacaoExistente(id_usuario: number, id_pet: number): Promise<SolicitacaoAdocao | null> {
+        try {
+            const solicitacoes = await sql<SolicitacaoAdocao[]>`
+                SELECT * FROM solicitacao_adocao
+                WHERE id_usuario = ${id_usuario}
+                AND id_pet = ${id_pet}
+                AND status IN ('PENDENTE', 'APROVADA')
+            `;
+            
+            if (solicitacoes.length > 0) {
+                console.log(`📋 [DAO - checkSolicitacaoExistente] Solicitação encontrada para usuário ${id_usuario} e pet ${id_pet}: ${solicitacoes[0].status}`);
+                return solicitacoes[0];
+            }
+            
+            console.log(`✅ [DAO - checkSolicitacaoExistente] Nenhuma solicitação ativa encontrada para usuário ${id_usuario} e pet ${id_pet}`);
+            return null;
+        } catch (error) {
+            console.error("Erro ao verificar solicitação existente:", error);
             throw error;
         }
     }

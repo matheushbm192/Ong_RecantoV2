@@ -1,10 +1,10 @@
 
 import sql from "../database/databaseClient";
-import { Usuario } from "../models/usuarioModel";
+import { Usuario, UsuarioPost } from "../models/usuarioModel";
 
 export class UsuarioComumDAO {
 
-    async insertUsuario(usuario: Usuario): Promise<Usuario> {
+    async insertUsuario(usuario: UsuarioPost): Promise<Usuario> {
     console.log("=== DAO - INSERINDO USUÁRIO NO BANCO ===");
     console.log("Dados a serem inseridos:", usuario);
 
@@ -12,8 +12,8 @@ export class UsuarioComumDAO {
       /* ===============================
          1. Verifica se email ou CPF já existem
       =============================== */
-      const usuarioExistente = await sql<{ id_usuario: number }[]>`
-        SELECT id_usuario
+      const usuarioExistente = await sql<{ id: number }[]>`
+        SELECT id
         FROM usuario
         WHERE email = ${usuario.email}
            OR cpf   = ${usuario.cpf}

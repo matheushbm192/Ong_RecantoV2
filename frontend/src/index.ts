@@ -1,5 +1,4 @@
 // Importar estilos globais
-import '@styles/global.css';
 import { atualizarInterfaceUsuario } from './scripts/main';
 // Inicializar aplicação
 console.log('Aplicação carregada!');

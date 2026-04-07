@@ -8,7 +8,7 @@ export interface Pet {
   sexo: "M" | "F" 
   idade?: number | null
   complemento?: string | null
-  cep?: string | null
+
   logradouro?: string | null
   numero?: string | null
   bairro?: string | null
@@ -28,12 +28,12 @@ export interface CreatePetDTO {
   sexo: "M" | "F" 
   idade?: number | null
   complemento?: string | null
-  cep?: string | null
+ 
   logradouro?: string | null
   numero?: string | null
-  bairro: string
-  cidade: string
-  estado: string
+  bairro?: string | null
+  cidade?: string | null
+  estado?: string | null
   id_usuario?: number | null
-  criado_em: string
+  criado_em?: string | null
 }

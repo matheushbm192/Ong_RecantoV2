@@ -14,7 +14,7 @@ export class PedidoAdocaoRota {
             if (!response.ok) {
                 throw new Error('Erro ao buscar pedidos de adoção.');
             }
-
+            console.log("Resposta da API de Pedidos de Adoção:", response);
             return response; // Armazena a lista completa
 
         }).catch((error) => {

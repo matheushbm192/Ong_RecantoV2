@@ -4,7 +4,7 @@ import { Usuario } from "../models/usuarioModel";
 export class UsuarioDAO {
     async selectUsuarioById(id_usuario: number) {
         const usuario = await sql<Usuario[]>`
-            SELECT * FROM usuario WHERE id_usuario = ${id_usuario}
+            SELECT * FROM usuario WHERE id = ${id_usuario}
         `;
 
         if (usuario.length === 0) {

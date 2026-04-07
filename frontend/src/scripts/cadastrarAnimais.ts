@@ -1,22 +1,7 @@
 import { PetRota } from "./utils/rotaAnimais";
 import { atualizarInterfaceUsuario } from "./main";
 import authService from "./services/authService";
-
-// Função para aplicar máscara de CEP (00000-000)
-function formatarCEP(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    let value: string = input.value.replace(/\D/g, ''); // Remove tudo que não for dígito
-
-    if (value.length > 8) {
-        value = value.substring(0, 8);
-    }
-
-    if (value.length > 5) {
-        value = value.substring(0, 5) + '-' + value.substring(5);
-    }
-
-    input.value = value;
-}
+import { CEPAutocompleter } from "./utils/cepAutocompleter";
 
 function enviarCadastro() {
     const form = document.getElementById('formulario-cadastro-animal') as HTMLFormElement;
@@ -56,43 +41,18 @@ function inicializarFormulario() {
         console.error("Botão de cadastro não encontrado");
     }
 
-    // Configurar máscara de CEP
-    const cepInput = document.getElementById('cep') as HTMLInputElement | null;
-
-    if (cepInput) {
-        cepInput.addEventListener('blur', function () {
-            const cep = this.value.replace(/\D/g, '');
-
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then((data: any) => {
-                        if (!data.erro) {
-                            const rua = document.getElementById('logradouro') as HTMLInputElement | null;
-                            const bairro = document.getElementById('bairro') as HTMLInputElement | null;
-                            const cidade = document.getElementById('cidade') as HTMLInputElement | null;
-                            const estado = document.getElementById('estado') as HTMLSelectElement | null;
-                            const numero = document.getElementById('numero') as HTMLInputElement | null;
-
-                            if (rua) rua.value = data.logradouro || '';
-                            if (bairro) bairro.value = data.bairro || '';
-                            if (cidade) cidade.value = data.localidade || '';
-                            if (estado) estado.value = data.uf || '';
-                            if (numero) numero.focus();
-                        } else {
-                            console.warn('CEP não encontrado ou inválido.');
-                        }
-                    })
-                    .catch((error: unknown) => {
-                        console.error('Erro ao buscar CEP:', error);
-                    });
-            }
-        });
-    }
+    // Configurar autocomplete de CEP usando a classe reutilizável
+    CEPAutocompleter.initialize('cep', {
+        logradouroId: 'logradouro',
+        bairroId: 'bairro',
+        cidadeId: 'cidade',
+        estadoId: 'estado',
+        numeroId: 'numero',
+    });
 }
 
-// Expor a função globalmente para compatibilidade com onkeyup
-(window as any).formatarCEP = formatarCEP;
+// Expor globalmente para compatibilidade com onkeyup
+(window as any).formatarCEP = (event: Event) => CEPAutocompleter.formatCEP(event);
 console.log('[CADASTRO-ANIMAIS] formatarCEP exposta globalmente.');
 // Função para inicializar tudo
 function inicializarPagina() {
